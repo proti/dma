@@ -1,0 +1,5 @@
+@import "../../../../scss/listItem";
+
+.list-item-row {
+  @include listItemRow();
+}

@@ -1,0 +1,71 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Sample dict app",
+  "main": "src/index.jsx",
+  "scripts": {
+    "lint": "eslint './*.js' './src/**/*.{js,jsx}'  --fix",
+    "test": "echo \"Error: no test specified yet. Will config Jest & Enzyme when enough time\" && exit 1",
+    "start": "NODE_ENV=development nodemon ./backend/index.js",
+    "build": "rm -rf ./dist && NODE_ENV=production webpack --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "XXXXXXXXX"
+  },
+  "keywords": [
+    "onedot"
+  ],
+  "author": "Mariusz Protasewicz",
+  "license": "ISC",
+  "dependencies": {
+    "@types/morgan": "^1.7.35",
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.3.1",
+    "@types/mini-css-extract-plugin": "^0.2.0",
+    "@types/node-sass": "^3.10.32",
+    "@types/prettier": "^1.15.2",
+    "autoprefixer": "^9.4.7",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "morgan": "^1.9.1",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.16.3",
+    "sass-loader": "^7.1.0",
+    "serve-favicon": "^2.5.0",
+    "style-loader": "^0.23.1",
+    "terser-webpack-plugin": "^1.2.1",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  }
+}

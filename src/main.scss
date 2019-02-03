@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,900');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+
+  &>div {
+    height: 100%;
+  }
+}

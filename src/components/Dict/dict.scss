@@ -1,0 +1,6 @@
+@import "../../scss/listItem";
+
+.dict {
+  @include listItemRow();
+  cursor: pointer;
+}

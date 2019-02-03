@@ -1,0 +1,136 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    "prettier",
+    "jsx-a11y"
+  ],
+  "extends": [
+    "airbnb",
+    "prettier/react",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parserOptions":
+  {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true,
+    "ecmaFeatures":
+    {
+      "jsx": true
+    }
+  },
+  "settings":
+  {
+    "react":
+    {
+      "version": "latest"
+    }
+  },
+  "env":
+  {
+    "browser": true,
+    "amd": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "globals":
+  {
+    "expect": true
+  },
+  "rules":
+  {
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "no-undef": "error",
+    "strict": "off",
+    "semi": "error",
+    "no-extra-semi": "error",
+    "no-underscore-dangle": "off",
+    "no-console": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "React",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "no-trailing-spaces": [
+      "warn",
+      {
+        "skipBlankLines": true
+      }
+    ],
+    "no-unreachable": "warn",
+    "no-alert": "warn",
+    "react/no-array-index-key": "off",
+    "react/prop-types": [
+      "warn",
+      {
+        "ignore": [
+          "children"
+        ]
+      }
+    ],
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "closingSlash": "never",
+        "beforeSelfClosing": "always",
+        "afterOpening": "never"
+      }
+    ],
+    "react/prefer-es6-class": "warn",
+    "react/prefer-stateless-function": "warn",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-closing-bracket-location": [
+      "error",
+      "tag-aligned"
+    ],
+    "react/jsx-curly-spacing": [
+      "error",
+      "never"
+    ],
+    "react/jsx-boolean-value": "error",
+    "react/jsx-wrap-multilines": "error",
+    "react/self-closing-comp": "error",
+    "react/jsx-no-bind": [
+      "error",
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    "react/require-render-return": "error",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "react/jsx-indent": [
+      "error",
+      2
+    ]
+  }
+}

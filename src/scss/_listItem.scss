@@ -1,0 +1,22 @@
+@mixin listItemRow {
+  transition: background 0.2s ease-in-out;
+
+  &:hover {
+    background: gainsboro;
+  }
+
+  & td {
+    padding: 10px;
+    border-bottom: 1px solid black;
+
+    & button {
+      cursor: pointer;
+    }
+  }
+
+  &:last-child {
+    & td {
+      border: none;
+    }
+  }
+}
