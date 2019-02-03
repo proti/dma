@@ -3,38 +3,64 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './home.scss';
 import { APP_REDUCER } from '../../app/AppReducer';
-import List from '../../common/components/List/List';
-import ListItemPropTypes from '../../common/components/List/ListItem/ListItemPropTypes';
-import ListItem from '../../common/components/List/ListItem/ListItem';
 import Dict from '../Dict/Dict';
+import fetchDataset from '../../app/AppActions';
+import { EDIT, HOME, ADD_DICT } from '../../common/Routes';
 
-const { arrayOf, shape } = PropTypes;
+const { arrayOf, shape, number, string } = PropTypes;
 class Home extends PureComponent {
-
   static propTypes = {
-    data: arrayOf(shape(ListItemPropTypes))
+    data: arrayOf(shape({ id: number, name: string })),
+    history: shape({})
   }
 
   static defaultProps = {
-    data: null
+    data: null,
+    history: {}
+  }
+
+
+  onDictRemoveHandler = async dictId => {
+    const { fetchDataset } = this.props;
+    await fetchDataset();
+    this.goTo(HOME);
+  }
+
+  onDictClickHandler = dictId => {
+    this.goTo(EDIT + '/' + dictId);
+  }
+
+  onNewDictClickHandler = () => {
+    this.goTo(ADD_DICT);
+  }
+
+  goTo(url) {
+    const { history } = this.props;
+    history.push(url);
   }
 
   renderDicts = () => {
     const { data } = this.props;
     return data.map(dict => {
       const { id, ...rest } = dict;
-      return <Dict key={id} id={id} {...rest} />;
+      return <Dict key={id} id={id} {...rest} onRemove={this.onDictRemoveHandler} onClick={this.onDictClickHandler} />;
     });
   }
 
   render() {
     const { data } = this.props;
+
     if (!data) return null;
     return (
       <main className={style.home}>
         <section>
           <table className={style.dictList}>
-            <thead><tr><th>Dictionaries:</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Dictionaries:</th>
+                <th><button type="button" onClick={this.onNewDictClickHandler}>New dictionary</button></th>
+              </tr>
+            </thead>
             <tbody>{this.renderDicts()}</tbody>
           </table>
         </section>
@@ -48,7 +74,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  dictEdit: () => dispatch()
+  fetchDataset: () => dispatch(fetchDataset())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

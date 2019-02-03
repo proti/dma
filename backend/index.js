@@ -4,10 +4,11 @@ const morgan = require('morgan');
 const path = require('path');
 const util = require('util');
 const webpackDevServer = require('./webpackDevServer');
-const db = require('./db');
 const {
-  GET_DATASET,
-  REMOVE_DICTIONARY
+  GET_DICTS,
+  GET_DICT_BY_ID,
+  REMOVE_DICTIONARY,
+  ADD_DICTIONARY
 } = require('./routes');
 
 const {
@@ -18,11 +19,43 @@ const {
 const app = express();
 const port = process.env.PORT || 3100;
 
+let db = require('./db');
+
 app.use(express.json());
 app.use(morgan('tiny'));
 
-app.get(GET_DATASET, (req, res) => {
-  res.send(db);
+app.get(GET_DICTS, (req, res) => {
+  const items = db.map(dict => {
+    const {
+      id,
+      name
+    } = dict;
+    return {
+      id,
+      name
+    };
+  });
+  res.send(items);
+});
+
+app.get(GET_DICT_BY_ID, (req, res) => {
+  const id = req.params.id;
+  const idNum = +id;
+  if (idNum == null) {
+    return res.status(400).json({
+      message: NO_DICT_ID_SPECIFIED
+    });
+  }
+  const item = db.find(dict => dict.id === idNum);
+  if (item) {
+    setTimeout(() => {
+      res.json(item);
+    }, 500);
+  } else {
+    res.status(400).json({
+      message: util.format(DICT_NOT_EXISTS, id)
+    });
+  }
 });
 
 app.delete(REMOVE_DICTIONARY, (req, res) => {
@@ -35,9 +68,12 @@ app.delete(REMOVE_DICTIONARY, (req, res) => {
   }
   const items = db.filter(item => item.id !== idNum);
   if (items) {
-    res.send({
-      success: true
-    });
+    db = [...items];
+    setTimeout(() => {
+      res.send({
+        success: true
+      });
+    }, 2000);
   } else {
     res.status(400).json({
       message: util.format(DICT_NOT_EXISTS, id)
@@ -45,29 +81,19 @@ app.delete(REMOVE_DICTIONARY, (req, res) => {
   }
 });
 
-// app.post('/add', (req, res) => {
-//   const id = dict.length;
-//   const newItem = {
-//     id,
-//     label: `label ${id}`
-//   };
-//   dict = [...dict, newItem];
-//   res.send({
-//     ...dict
-//   });
-// });
 
-// app.get('/edit/:id', (req, res) => {
-//   const editItem = dict.find(item => item.id === req.params.id);
-//   if (!editItem) {
-//     return res.status(404).send('no item');
-//   }
-//   res.send(editItem);
-// });
-
-// app.get('/delete/:id', (req, res) => {
-//   res.send('delete:', req.params);
-// });
+app.post(ADD_DICTIONARY, (req, res) => {
+  let newDict = req.body;
+  const newDictId = db.length;
+  newDict = {
+    ...newDict,
+    id: newDictId
+  };
+  db = [...db, newDict].sort((a, b) => a.id - b.id);
+  res.send({
+    success: true
+  });
+});
 
 //catch all request and reload correct route after refreshing the page
 app.get('*', (request, res, next) => {

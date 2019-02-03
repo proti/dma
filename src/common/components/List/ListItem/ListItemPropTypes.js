@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 const {
   number,
   string,
-  func
+  func,
+  bool
 } = PropTypes;
 
 const ListItemPropTypes = {
@@ -11,6 +12,8 @@ const ListItemPropTypes = {
   label: string,
   colour: string,
   price: string,
-  onClick: func
+  isEditable: bool,
+  onClick: func,
+  onChange: func
 };
 export default ListItemPropTypes;

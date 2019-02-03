@@ -1,8 +1,8 @@
 import {
   APP_INIT,
-  DATASET_REQUEST,
-  DATASET_REQUEST_ERROR,
-  DATASET_REQUEST_SUCCESS
+  DICTS_REQUEST,
+  DICTS_REQUEST_ERROR,
+  DICTS_REQUEST_SUCCESS
 } from './AppActionType';
 
 const initialState = {
@@ -21,14 +21,14 @@ const appReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case APP_INIT:
-    case DATASET_REQUEST:
+    case DICTS_REQUEST:
       return newState;
-    case DATASET_REQUEST_ERROR:
+    case DICTS_REQUEST_ERROR:
       return {
         ...newState,
         error: action.payload
       };
-    case DATASET_REQUEST_SUCCESS:
+    case DICTS_REQUEST_SUCCESS:
       return {
         ...newState,
         data: action.payload

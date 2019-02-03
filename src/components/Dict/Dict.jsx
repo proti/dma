@@ -2,51 +2,60 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './dict.scss';
-import removeDict from './DictActions';
+import { removeDict } from './DictActions';
 import { DICT_REDUCER } from './DictReducer';
+import DictPropTypes from './DictPropTypes';
 
-const { number, string, bool, func, shape } = PropTypes;
+const { string, func, shape } = PropTypes;
 class Dict extends Component {
 
+  state = { isRemoving: false };
   static propTypes = {
-    id: number.isRequired,
-    name: string.isRequired,
-    isEditable: bool,
+    ...DictPropTypes,
     removeDict: func.isRequired,
+    onRemove: func.isRequired,
+    onClick: func.isRequired,
     error: shape({ message: string })
   }
 
   static defaultProps = {
-    error: null,
-    isEditable: true
+    error: null
   }
 
-  onDictSelectedHandler = (e) => {
-    if (e.target.type !== 'button') {
-      console.log("show items of dict:", this.props.id);
-    }
+  onDictSelectedHandler = () => {
+    const { onClick, id } = this.props;
+    onClick(id);
   }
 
-  onDictRemoveHandler = () => {
-    const { removeDict, id } = this.props;
-    removeDict(id);
+  onDictRemoveHandler = event => {
+    event.stopPropagation();
+    const { removeDict, id, onRemove } = this.props;
+    this.setState({ isRemoving: true }, async () => {
+      await removeDict(id);
+      onRemove(id);
+    });
   }
 
   renderRemoveButton = () => {
-    const { isEditable } = this.props;
-    return (isEditable && <td><button type="button" onClick={this.onDictRemoveHandler}>Remove dict</button></td>);
+    const { isRemoving } = this.state;
+    return (!isRemoving && <td><button type="button" onClick={this.onDictRemoveHandler}>Remove</button></td>);
+  }
+
+  renderLabel = () => {
+    const { isRemoving } = this.state;
+    const { name } = this.props;
+    const label = isRemoving ? 'Removing dict ...' : name;
+    return <td>{label}</td>;
   }
 
   render() {
-    const { name, error } = this.props;
+    const { error } = this.props;
     if (error) {
       return error.message;
     }
     return (
       <tr className={style.dict} onClick={this.onDictSelectedHandler}>
-        <td>
-          {name}
-        </td>
+        {this.renderLabel()}
         {this.renderRemoveButton()}
       </tr>
     );
@@ -55,6 +64,7 @@ class Dict extends Component {
 const mapStateToProps = state => ({
   error: state[DICT_REDUCER].error
 });
+
 const mapDispatchToProps = dispatch => ({
   removeDict: (dictId) => dispatch(removeDict(dictId))
 });
