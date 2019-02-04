@@ -15,7 +15,7 @@ const initialState = {
   status: null
 };
 
-export const DICT_REDUCER = 'DictReducer';
+export const DICT_REDUCER = 'DICT_REDUCER';
 
 const dictReducer = (state = initialState, action) => {
 

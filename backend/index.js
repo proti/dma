@@ -5,27 +5,38 @@ const path = require('path');
 const util = require('util');
 const webpackDevServer = require('./webpackDevServer');
 const {
-  GET_DICTS,
+  GET_DICTS_NAMES,
   GET_DICT_BY_ID,
   REMOVE_DICTIONARY,
-  ADD_DICTIONARY
+  ADD_DICTIONARY,
+  GET_COLOURS,
+  EDIT_COLOURS,
+  GET_COLOURS_DOMAINS_NAMES,
+  GET_COLOURS_DOMAIN_BY_ID,
+  REMOVE_COLOURS_DOMAIN,
+  SAVE_COLOURS_DOMAIN
 } = require('./routes');
-
 const {
   NO_DICT_ID_SPECIFIED,
-  DICT_NOT_EXISTS
+  DICT_NOT_EXISTS,
+
+  NO_COLOURS_DOMAIN_ID_SPECIFIED,
+  COLOURS_DOMAIN_NOT_EXISTS
 } = require('./errors');
+const db = require('./db');
 
 const app = express();
 const port = process.env.PORT || 3100;
 
-let db = require('./db');
+let products = db.products;
+let colours = db.colours;
+let coloursDomains = db.coloursDomains;
 
 app.use(express.json());
 app.use(morgan('tiny'));
 
-app.get(GET_DICTS, (req, res) => {
-  const items = db.map(dict => {
+app.get(GET_DICTS_NAMES, (req, res) => {
+  const items = products.map(dict => {
     const {
       id,
       name
@@ -35,7 +46,7 @@ app.get(GET_DICTS, (req, res) => {
       name
     };
   });
-  res.send(items);
+  res.json(items);
 });
 
 app.get(GET_DICT_BY_ID, (req, res) => {
@@ -46,11 +57,9 @@ app.get(GET_DICT_BY_ID, (req, res) => {
       message: NO_DICT_ID_SPECIFIED
     });
   }
-  const item = db.find(dict => dict.id === idNum);
+  const item = products.find(dict => dict.id === idNum);
   if (item) {
-    setTimeout(() => {
-      res.json(item);
-    }, 500);
+    res.json(item);
   } else {
     res.status(400).json({
       message: util.format(DICT_NOT_EXISTS, id)
@@ -66,14 +75,12 @@ app.delete(REMOVE_DICTIONARY, (req, res) => {
       message: NO_DICT_ID_SPECIFIED
     });
   }
-  const items = db.filter(item => item.id !== idNum);
+  const items = products.filter(item => item.id !== idNum);
   if (items) {
-    db = [...items];
-    setTimeout(() => {
-      res.send({
-        success: true
-      });
-    }, 2000);
+    products = [...items];
+    res.json({
+      success: true
+    });
   } else {
     res.status(400).json({
       message: util.format(DICT_NOT_EXISTS, id)
@@ -84,13 +91,104 @@ app.delete(REMOVE_DICTIONARY, (req, res) => {
 
 app.post(ADD_DICTIONARY, (req, res) => {
   let newDict = req.body;
-  const newDictId = db.length;
+  const newDictId = products.length;
   newDict = {
     ...newDict,
     id: newDictId
   };
-  db = [...db, newDict].sort((a, b) => a.id - b.id);
-  res.send({
+  products = [...products, newDict].sort((a, b) => a.id - b.id);
+  res.json({
+    success: true
+  });
+});
+
+//COLOURS
+const getColours = () => {
+  if (!colours.length) {
+    const coloursFrom = products.map(dict => dict.items.map(item => item.colour));
+    const noDuplicates = coloursFrom.reduce((acc, curr) => [...new Set(acc.concat(curr))]);
+    const objColour = noDuplicates.map((colour, index) => ({
+      id: index,
+      value: colour
+    }));
+    return objColour;
+  }
+  return colours;
+};
+
+app.get(GET_COLOURS, (req, res) => res.json(getColours()));
+
+app.post(EDIT_COLOURS, (req, res) => {
+  const newColours = req.body;
+  colours = [...newColours];
+  res.json({
+    success: true
+  });
+});
+
+//COLOURS DOMAINS
+app.get(GET_COLOURS_DOMAINS_NAMES, (req, res) => {
+  const items = coloursDomains.map(domain => {
+    const {
+      id,
+      name
+    } = domain;
+    return {
+      id,
+      name
+    };
+  });
+  res.json(items);
+});
+
+app.get(GET_COLOURS_DOMAIN_BY_ID, (req, res) => {
+  const id = req.params.id;
+  const idNum = +id;
+  if (idNum == null) {
+    return res.status(400).json({
+      message: NO_COLOURS_DOMAIN_ID_SPECIFIED
+    });
+  }
+  const domain = coloursDomains.find(domain => domain.id === idNum);
+  if (domain) {
+    res.json(domain);
+  } else {
+    res.status(400).json({
+      message: util.format(COLOURS_DOMAIN_NOT_EXISTS, id)
+    });
+  }
+});
+
+app.delete(REMOVE_COLOURS_DOMAIN, (req, res) => {
+  const id = req.params.id;
+  const idNum = +id;
+  if (idNum == null) {
+    return res.status(400).json({
+      message: NO_COLOURS_DOMAIN_ID_SPECIFIED
+    });
+  }
+  const items = coloursDomains.filter(item => item.id !== idNum);
+  if (items) {
+    coloursDomains = [...items];
+    res.json({
+      success: true
+    });
+  } else {
+    res.status(400).json({
+      message: util.format(COLOURS_DOMAIN_NOT_EXISTS, id)
+    });
+  }
+});
+
+app.post(SAVE_COLOURS_DOMAIN, (req, res) => {
+  let newDomain = req.body;
+  const newDomainId = coloursDomains.length;
+  newDomain = {
+    ...newDomain,
+    id: newDomainId
+  };
+  coloursDomains = [...coloursDomains, newDomain].sort((a, b) => a.id - b.id);
+  res.json({
     success: true
   });
 });

@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import style from './home.scss';
 import { APP_REDUCER } from '../../app/AppReducer';
 import Dict from '../Dict/Dict';
 import fetchDataset from '../../app/AppActions';
-import { EDIT, HOME, ADD_DICT } from '../../common/Routes';
+import { EDIT, HOME, ADD_DICT, COLOURS } from '../../common/Routes';
 
 const { arrayOf, shape, number, string } = PropTypes;
 class Home extends PureComponent {
@@ -28,10 +29,6 @@ class Home extends PureComponent {
 
   onDictClickHandler = dictId => {
     this.goTo(EDIT + '/' + dictId);
-  }
-
-  onNewDictClickHandler = () => {
-    this.goTo(ADD_DICT);
   }
 
   goTo(url) {
@@ -58,7 +55,8 @@ class Home extends PureComponent {
             <thead>
               <tr>
                 <th>Dictionaries:</th>
-                <th><button type="button" onClick={this.onNewDictClickHandler}>New dictionary</button></th>
+                <th><Link to={ADD_DICT}>New dictionary</Link></th>
+                <th><Link to={COLOURS}>Colours list</Link></th>
               </tr>
             </thead>
             <tbody>{this.renderDicts()}</tbody>

@@ -11,11 +11,19 @@ import appReducer, {
 import dictReducer, {
   DICT_REDUCER
 } from '../components/Dict/DictReducer';
+import coloursDictReducer, {
+  COLOURS_DICT_REDUCER
+} from '../components/ColoursDict/ColoursDictReducer';
+import coloursDomainReducer, {
+  COLOURS_DOMAIN_REDUCER
+} from '../components/ColoursDict/ColoursDomain/ColoursDomainReducer';
 
 const store = createStore(
   combineReducers({
     [APP_REDUCER]: appReducer,
-    [DICT_REDUCER]: dictReducer
+    [DICT_REDUCER]: dictReducer,
+    [COLOURS_DICT_REDUCER]: coloursDictReducer,
+    [COLOURS_DOMAIN_REDUCER]: coloursDomainReducer
   }),
   compose(
     applyMiddleware(thunk))

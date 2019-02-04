@@ -10,7 +10,7 @@ const initialState = {
   status: null
 };
 
-export const APP_REDUCER = 'AppReducer';
+export const APP_REDUCER = 'APP_REDUCER';
 
 const appReducer = (state = initialState, action) => {
 

@@ -1,4 +1,5 @@
 {
+  "root": true,
   "parser": "babel-eslint",
   "plugins": [
     "react",
@@ -11,37 +12,30 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
-  "parserOptions":
-  {
+  "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
     "allowImportExportEverywhere": true,
-    "ecmaFeatures":
-    {
+    "ecmaFeatures": {
       "jsx": true
     }
   },
-  "settings":
-  {
-    "react":
-    {
+  "settings": {
+    "react": {
       "version": "latest"
     }
   },
-  "env":
-  {
+  "env": {
     "browser": true,
     "amd": true,
     "es6": true,
     "node": true,
     "jest": true
   },
-  "globals":
-  {
+  "globals": {
     "expect": true
   },
-  "rules":
-  {
+  "rules": {
     "indent": [
       "error",
       2,
