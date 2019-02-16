@@ -1,36 +1,30 @@
 import React from 'react';
-import style from './listItem.scss';
-import ListItemPropTypes from './ListItemPropTypes';
-import { EDIT, REMOVE, CHANGE } from './ListItemAction';
-import EditableItem from '../../EditableItem/EditableItem';
-import { PRODUCT, COLOUR, PRICE } from '../../../ColumnName';
+import PropTypes from 'prop-types';
+//import style from './listItem.scss';
+import LabelButton from '../../LabelButton/LabelButton';
 
-const ListItem = ({ id, label, colour, price, onClick, onChange, isEditable }) => {
-
-  const onEditClickHandler = () => onClick({ id, action: EDIT });
-  const onRemoveClickHandler = () => onClick({ id, action: REMOVE });
-  const onInputChangeHandler = input => onChange({ id, action: CHANGE, value: input.value, inputId: input.id });
-
+const ListItem = ({ id, onClick, onRemove, children }) => {
+  const onRemoveClickHandler = () => onRemove(id);
+  const onClickHandler = () => onClick(id);
   return (
-    <tr className={style.listItemRow}>
-      <td><EditableItem id={PRODUCT} disabled={!isEditable} defaultValue={label} onChange={onInputChangeHandler} /></td>
-      <td><EditableItem id={COLOUR} disabled={!isEditable} defaultValue={colour} onChange={onInputChangeHandler} /></td>
-      <td><EditableItem id={PRICE} disabled={!isEditable} defaultValue={price} onChange={onInputChangeHandler} /></td>
-      <td>{!isEditable && <button type="button" onClick={onEditClickHandler}>edit</button>}</td>
-      <td><button type="button" onClick={onRemoveClickHandler}>remove</button></td>
-    </tr>
+    <li>
+      <LabelButton onClick={onClickHandler}>{children}</LabelButton>
+      <LabelButton onClick={onRemoveClickHandler}>Remove</LabelButton>
+    </li>
   );
 };
 
-ListItem.propTypes = ListItemPropTypes;
+const { oneOfType, string, number, node, arrayOf, func } = PropTypes;
+ListItem.propTypes = {
+  id: oneOfType([string, number]).isRequired,
+  children: oneOfType([node, arrayOf(node)]),
+  onClick: func,
+  onRemove: func
+};
 ListItem.defaultProps = {
-  id: 0,
-  label: '',
-  colour: '',
-  price: '',
-  isEditable: false,
-  onClick: () => { },
-  onChange: () => { }
+  children: null,
+  onClick: () => {},
+  onRemove: () => {}
 };
 
 export default ListItem;

@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
+    "history": "^4.7.2",
     "morgan": "^1.9.1",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
@@ -59,6 +60,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.16.3",
+    "prettier-stylelint": "^0.4.2",
     "sass-loader": "^7.1.0",
     "serve-favicon": "^2.5.0",
     "style-loader": "^0.23.1",

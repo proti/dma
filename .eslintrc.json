@@ -1,14 +1,11 @@
 {
   "root": true,
   "parser": "babel-eslint",
-  "plugins": [
-    "react",
-    "prettier",
-    "jsx-a11y"
-  ],
+  "plugins": ["react", "prettier", "jsx-a11y"],
   "extends": [
     "airbnb",
     "prettier/react",
+    "plugin:prettier/recommended",
     "eslint:recommended",
     "plugin:react/recommended"
   ],
@@ -36,6 +33,7 @@
     "expect": true
   },
   "rules": {
+    "prettier/prettier": "error",
     "indent": [
       "error",
       2,
@@ -43,10 +41,7 @@
         "SwitchCase": 1
       }
     ],
-    "comma-dangle": [
-      "error",
-      "never"
-    ],
+    "comma-dangle": ["error", "never"],
     "quotes": [
       "error",
       "single",
@@ -79,9 +74,7 @@
     "react/prop-types": [
       "warn",
       {
-        "ignore": [
-          "children"
-        ]
+        "ignore": ["children"]
       }
     ],
     "react/jsx-tag-spacing": [
@@ -95,14 +88,8 @@
     "react/prefer-es6-class": "warn",
     "react/prefer-stateless-function": "warn",
     "react/jsx-pascal-case": "error",
-    "react/jsx-closing-bracket-location": [
-      "error",
-      "tag-aligned"
-    ],
-    "react/jsx-curly-spacing": [
-      "error",
-      "never"
-    ],
+    "react/jsx-closing-bracket-location": ["error", "tag-aligned"],
+    "react/jsx-curly-spacing": ["error", "never"],
     "react/jsx-boolean-value": "error",
     "react/jsx-wrap-multilines": "error",
     "react/self-closing-comp": "error",
@@ -122,9 +109,6 @@
         "allowSingleLine": true
       }
     ],
-    "react/jsx-indent": [
-      "error",
-      2
-    ]
+    "react/jsx-indent": ["error", 2]
   }
 }

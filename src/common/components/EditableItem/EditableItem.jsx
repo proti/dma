@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './editableItem.scss';
-import { PRICE } from '../../ColumnName';
+import { PRICE } from '../../../components/ProductsDict/ColumnName';
 
 const { string, func, bool } = PropTypes;
 class EditableItem extends Component {
-  state = { value: '' }
+  state = { value: '' };
 
   static propTypes = {
     id: string.isRequired,
@@ -15,7 +15,7 @@ class EditableItem extends Component {
   };
 
   static defaultProps = {
-    onChange: () => { },
+    onChange: () => {},
     disabled: false,
     defaultValue: ''
   };
@@ -23,10 +23,10 @@ class EditableItem extends Component {
   onChangeHandler = event => {
     const { onChange, id } = this.props;
     const rawValue = event.target.value;
-    const currency = rawValue.split(' ')[1] || (isNaN(rawValue) ? 0 : rawValue);
-    const value = id === PRICE ? `CHF ${currency}` : rawValue;
+    const currency = rawValue.split(' ')[1] || (isNaN(rawValue) ? '' : rawValue);
+    const value = id.includes(PRICE) ? `CHF ${currency}` : rawValue;
     this.setState({ value }, () => onChange({ value, id }));
-  }
+  };
 
   render() {
     const { value } = this.state;
@@ -36,8 +36,9 @@ class EditableItem extends Component {
         id={id}
         type="text"
         onChange={this.onChangeHandler}
-        value={value || defaultValue}
+        value={defaultValue || value}
         disabled={disabled}
+        className={style.editableItemInput}
       />
     );
   }

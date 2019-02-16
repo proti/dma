@@ -74,40 +74,42 @@ module.exports = {
     }
   ],
   colours: [],
-  coloursDomains: [{
-    id: 0,
-    name: 'test domain colour 0',
-    items: [
-      {
-        domain: 'one',
-        range: 'range 1'
-      },
-      {
-        domain: 'two',
-        range: 'range 2'
-      },
-      {
-        domain: 'three',
-        range: 'range 3'
-      }
-    ]
-  },
-  {
-    id: 1,
-    name: 'test 2 domain name',
-    items: [
-      {
-        domain: ' 2 one',
-        range: '2 range 1'
-      },
-      {
-        domain: '2 two',
-        range: '2 range 2'
-      },
-      {
-        domain: '2 three',
-        range: '2 range 3'
-      }
-    ]
-  }]
+  coloursDomains: [
+    {
+      id: 0,
+      name: 'test domain colour 0',
+      items: [
+        {
+          domain: 'one',
+          range: 'range 1'
+        },
+        {
+          domain: 'two',
+          range: 'range 2'
+        },
+        {
+          domain: 'three',
+          range: 'range 3'
+        }
+      ]
+    },
+    {
+      id: 1,
+      name: 'test 2 domain name',
+      items: [
+        {
+          domain: ' 2 one',
+          range: '2 range 1'
+        },
+        {
+          domain: '2 two',
+          range: '2 range 2'
+        },
+        {
+          domain: '2 three',
+          range: '2 range 3'
+        }
+      ]
+    }
+  ]
 };

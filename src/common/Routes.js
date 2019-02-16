@@ -1,27 +1,22 @@
 const HOME = '/';
 const ADD_DICT = '/add/dict';
-const REMOVE = '/remove';
-const EDIT = '/edit';
-const EDIT_ID = `${EDIT}/:dictId`;
+const DETAILS = '/details';
+const DETAILS_ID = `${DETAILS}/:id`;
 
-const COLOURS = '/colours';
+const DETAILS_DOMAIN = '/domain/details';
+const DETAILS_DOMAIN_ID = `${DETAILS_DOMAIN}/:id`;
 
-const COLOURS_DOMAINS = `${COLOURS}/domain`;
+const ADD_DOMAIN = '/add/domain';
 
-const ADD_COLOURS_DOMAIN = `${COLOURS}/domain/add`;
-const EDIT_COLOURS_DOMAIN = `${COLOURS}/domain/edit`;
-const EDIT_COLOURS_DOMAIN_ID = `${EDIT_COLOURS_DOMAIN}/:domainId`;
+const ADD_COLOUR = '/add/colour';
 
 export {
   HOME,
   ADD_DICT,
-  REMOVE,
-  EDIT,
-  EDIT_ID,
-  COLOURS,
-  COLOURS_DOMAINS,
-  ADD_COLOURS_DOMAIN,
-
-  EDIT_COLOURS_DOMAIN,
-  EDIT_COLOURS_DOMAIN_ID
+  DETAILS,
+  DETAILS_ID,
+  DETAILS_DOMAIN,
+  DETAILS_DOMAIN_ID,
+  ADD_DOMAIN,
+  ADD_COLOUR
 };

@@ -13,7 +13,6 @@ const initialState = {
 export const APP_REDUCER = 'APP_REDUCER';
 
 const appReducer = (state = initialState, action) => {
-
   const newState = {
     ...state,
     status: action.type

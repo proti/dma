@@ -9,8 +9,10 @@ const {
   GET_DICT_BY_ID,
   REMOVE_DICTIONARY,
   ADD_DICTIONARY,
+  SAVE_DICT_BY_ID,
   GET_COLOURS,
   EDIT_COLOURS,
+  ADD_COLOUR,
   GET_COLOURS_DOMAINS_NAMES,
   GET_COLOURS_DOMAIN_BY_ID,
   REMOVE_COLOURS_DOMAIN,
@@ -37,10 +39,7 @@ app.use(morgan('tiny'));
 
 app.get(GET_DICTS_NAMES, (req, res) => {
   const items = products.map(dict => {
-    const {
-      id,
-      name
-    } = dict;
+    const { id, name } = dict;
     return {
       id,
       name
@@ -88,7 +87,6 @@ app.delete(REMOVE_DICTIONARY, (req, res) => {
   }
 });
 
-
 app.post(ADD_DICTIONARY, (req, res) => {
   let newDict = req.body;
   const newDictId = products.length;
@@ -102,6 +100,17 @@ app.post(ADD_DICTIONARY, (req, res) => {
   });
 });
 
+app.post(SAVE_DICT_BY_ID, (req, res) => {
+  const editDictId = req.params.id;
+  const idNum = +editDictId;
+  const newDict = { ...req.body };
+  const restDicts = products.filter(dict => dict.id !== idNum);
+  products = [...restDicts, newDict].sort((a, b) => a.id - b.id);
+  res.json({
+    success: true
+  });
+});
+
 //COLOURS
 const getColours = () => {
   if (!colours.length) {
@@ -109,7 +118,7 @@ const getColours = () => {
     const noDuplicates = coloursFrom.reduce((acc, curr) => [...new Set(acc.concat(curr))]);
     const objColour = noDuplicates.map((colour, index) => ({
       id: index,
-      value: colour
+      name: colour
     }));
     return objColour;
   }
@@ -126,13 +135,19 @@ app.post(EDIT_COLOURS, (req, res) => {
   });
 });
 
+app.post(ADD_COLOUR, (req, res) => {
+  const newColour = { id: req.body.id, name: req.body.name };
+  colours = [...getColours(), newColour];
+  console.log(colours);
+  res.json({
+    success: true
+  });
+});
+
 //COLOURS DOMAINS
 app.get(GET_COLOURS_DOMAINS_NAMES, (req, res) => {
   const items = coloursDomains.map(domain => {
-    const {
-      id,
-      name
-    } = domain;
+    const { id, name } = domain;
     return {
       id,
       name

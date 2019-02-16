@@ -1,4 +1,4 @@
-@import "../../scss/list";
+@import '../../scss/list';
 
 .home {
   height: 100%;
@@ -6,6 +6,7 @@
   & .dict-list {
     @include list();
     width: 400px;
+
     & th {
       border-bottom: 1px solid;
     }

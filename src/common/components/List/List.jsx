@@ -1,32 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import style from '../../../scss/_list.scss';
-import ListItem from './ListItem/ListItem';
-import ListItemPropTypes from './ListItem/ListItemPropTypes';
 
-const List = ({ items, onItemAction }) => {
-  const onItemClickHandler = (listItemVo) => onItemAction(listItemVo);
+const List = ({ label, children }) => {
   return (
-    <table className={style.list}>
-      <tbody>
-        {items.map(item => {
-          const { id, product, colour, price } = item;
-          return <ListItem key={id} id={id} label={product} colour={colour} price={price} onClick={onItemClickHandler} />;
-        })}
-      </tbody>
-    </table>
+    <div className={style.list}>
+      <div>{label}</div>
+      <ul>{children}</ul>
+    </div>
   );
 };
 
-const { arrayOf, shape, func } = PropTypes;
+const { string, arrayOf, oneOfType, node } = PropTypes;
 List.propTypes = {
-  items: arrayOf(shape(ListItemPropTypes)),
-  onItemAction: func
+  label: oneOfType([node, arrayOf(node), string]),
+  children: oneOfType([node, arrayOf(node)])
 };
 
 List.defaultProps = {
-  items: null,
-  onItemAction: () => { }
+  label: null,
+  children: null
 };
 
 export default List;

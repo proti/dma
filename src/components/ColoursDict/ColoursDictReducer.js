@@ -4,7 +4,10 @@ import {
   GET_COLOURS_SUCCESS,
   SAVE_COLOURS_REQUEST,
   SAVE_COLOURS_SUCCESS,
-  SAVE_COLOURS_ERROR
+  SAVE_COLOURS_ERROR,
+  ADD_COLOUR_REQUEST,
+  ADD_COLOUR_ERROR,
+  ADD_COLOUR_SUCCESS
 } from './ColoursDictActionType';
 
 const initialState = {
@@ -15,7 +18,6 @@ const initialState = {
 export const COLOURS_DICT_REDUCER = 'COLOURS_DICT_REDUCER';
 
 const coloursDictReducer = (state = initialState, action) => {
-
   const newState = {
     ...state,
 
@@ -25,6 +27,7 @@ const coloursDictReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_COLOURS_REQUEST:
     case SAVE_COLOURS_REQUEST:
+    case ADD_COLOUR_REQUEST:
       return newState;
     case GET_COLOURS_ERROR:
       return {
@@ -32,11 +35,13 @@ const coloursDictReducer = (state = initialState, action) => {
         error: action.payload.response.data
       };
     case SAVE_COLOURS_ERROR:
+    case ADD_COLOUR_ERROR:
       return {
         ...newState,
         error: action.payload.response.data
       };
     case SAVE_COLOURS_SUCCESS:
+    case ADD_COLOUR_SUCCESS:
       return {
         ...newState,
         status: action.payload
