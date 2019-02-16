@@ -21,15 +21,11 @@ class ProductDetails extends Component {
     data: null
   };
 
-  onEditHandler = () => {
-    this.setState(prevState => ({ editable: !prevState.editable }));
-  };
-
   onSaveHandler = async () => {
-    const { items } = this.state;
+    const { items, label } = this.state;
     const { saveDictById, data } = this.props;
     this.onEditHandler();
-    const dataToSave = { ...data, items };
+    const dataToSave = { ...data, name: label, items };
     await saveDictById(dataToSave);
     this.fetchData();
   };
@@ -44,11 +40,14 @@ class ProductDetails extends Component {
     this.update(newItems);
   };
 
+  onLabelChangeHandler = vo => this.update(null, vo.value);
+
   async fetchData() {
     const { getDictById } = this.props;
     await getDictById(this.id);
     const { data } = this.props;
-    this.update(data && data.items);
+    const { label } = this.state;
+    this.update(data && data.items, label || data.name);
   }
 
   renderItems = () => {
@@ -78,10 +77,22 @@ class ProductDetails extends Component {
     });
   };
 
+  renderLabel = () => {
+    const { editable, label } = this.state;
+    return (
+      <EditableItem
+        id="label"
+        defaultValue={label}
+        disabled={!editable}
+        onChange={this.onLabelChangeHandler}
+      />
+    );
+  };
+
   render() {
     const { data } = this.props;
     if (!data) return 'Fetchind data...';
-    return <List label={data.name}>{this.renderItems()}</List>;
+    return <List label={this.renderLabel()}>{this.renderItems()}</List>;
   }
 }
 const mapStateToProps = state => ({

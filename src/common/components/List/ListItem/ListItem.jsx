@@ -6,9 +6,11 @@ import LabelButton from '../../LabelButton/LabelButton';
 const ListItem = ({ id, onClick, onRemove, children }) => {
   const onRemoveClickHandler = () => onRemove(id);
   const onClickHandler = () => onClick(id);
+  const isLabel = typeof children === 'string';
+
   return (
     <li>
-      <LabelButton onClick={onClickHandler}>{children}</LabelButton>
+      {isLabel ? <LabelButton onClick={onClickHandler}>{children}</LabelButton> : children}
       <LabelButton onClick={onRemoveClickHandler}>Remove</LabelButton>
     </li>
   );

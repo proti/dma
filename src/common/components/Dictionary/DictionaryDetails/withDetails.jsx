@@ -23,7 +23,7 @@ const withDetails = WrappedComponent => {
       return this;
     }
 
-    state = { items: [], editable: false };
+    state = { items: [], label: '', editable: false, errors: [] };
 
     componentDidMount() {
       this.fetchData();
@@ -36,11 +36,11 @@ const withDetails = WrappedComponent => {
       }
     }
 
-    update = items => {
-      if (items) {
-        const sortedItems = items.sort((a, b) => a.id - b.id);
-        this.setState({ items: sortedItems });
-      }
+    update = (newItems, newLabel) => {
+      const { items, label } = this.state;
+      const updatedLabel = newLabel || label;
+      const sortedItems = newItems ? newItems.sort((a, b) => a.id - b.id) : items;
+      this.setState({ items: sortedItems, label: updatedLabel });
     };
 
     get id() {
@@ -51,6 +51,10 @@ const withDetails = WrappedComponent => {
       } = this.props;
       return +id;
     }
+
+    onEditHandler = () => {
+      this.setState(prevState => ({ editable: !prevState.editable }));
+    };
 
     render() {
       const { items, editable } = this.state;

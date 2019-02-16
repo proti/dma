@@ -54,19 +54,19 @@ module.exports = {
       items: [
         {
           id: 0,
-          product: 'Apple iPhone 5',
+          product: 'Apple iPhone 4',
           colour: 'Stonegrey',
           price: 'CHF 69'
         },
         {
           id: 1,
-          product: 'Samsung Galaxy S1',
+          product: 'Samsung Galaxy S2',
           colour: 'Midnight Black',
           price: 'CHF 59'
         },
         {
           id: 2,
-          product: 'Huawei P1',
+          product: 'Huawei P2',
           colour: 'Mystic Silver',
           price: 'CHF 2'
         }
@@ -80,34 +80,16 @@ module.exports = {
       name: 'test domain colour 0',
       items: [
         {
-          domain: 'one',
-          range: 'range 1'
+          domain: 'Stonegrey',
+          range: 'a'
         },
         {
-          domain: 'two',
-          range: 'range 2'
+          domain: 'Midnight Black',
+          range: 'b'
         },
         {
-          domain: 'three',
-          range: 'range 3'
-        }
-      ]
-    },
-    {
-      id: 1,
-      name: 'test 2 domain name',
-      items: [
-        {
-          domain: ' 2 one',
-          range: '2 range 1'
-        },
-        {
-          domain: '2 two',
-          range: '2 range 2'
-        },
-        {
-          domain: '2 three',
-          range: '2 range 3'
+          domain: 'Mystic Silver',
+          range: 'c'
         }
       ]
     }

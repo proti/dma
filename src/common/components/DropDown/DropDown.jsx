@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const DropDown = ({ id, items, onChange }) => {
+const DropDown = ({ id, items, onChange, selected }) => {
   const onChangeHandler = event => {
     const value = event.target.value;
     onChange({ id, value });
@@ -23,7 +23,7 @@ const DropDown = ({ id, items, onChange }) => {
   };
 
   return (
-    <select name={id} onChange={onChangeHandler}>
+    <select name={id} onChange={onChangeHandler} defaultValue={selected}>
       {renderOptions()}
     </select>
   );
@@ -33,11 +33,13 @@ const { arrayOf, string, shape, number, func } = PropTypes;
 DropDown.propTypes = {
   id: string,
   items: arrayOf(shape({ id: number, name: string })).isRequired,
-  onChange: func
+  onChange: func,
+  selected: string
 };
 DropDown.defaultProps = {
   id: '',
-  onChange: () => {}
+  onChange: () => {},
+  selected: null
 };
 
 export default DropDown;
