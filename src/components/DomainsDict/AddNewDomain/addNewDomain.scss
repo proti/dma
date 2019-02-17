@@ -1,0 +1,5 @@
+@import '../../../scss/add_new';
+
+.add-new-domain {
+  @include add-new();
+}

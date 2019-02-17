@@ -1,0 +1,10 @@
+.domain-list-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: flex;
+
+  & div {
+    min-width: calc(50% - 29px);
+  }
+}

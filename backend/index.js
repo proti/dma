@@ -139,7 +139,6 @@ app.post(EDIT_COLOURS, (req, res) => {
 app.post(ADD_COLOUR, (req, res) => {
   const newColour = { id: req.body.id, name: req.body.name };
   colours = [...getColours(), newColour];
-  console.log(colours);
   res.json({
     success: true
   });
@@ -215,7 +214,6 @@ app.post(SAVE_DOMAIN, (req, res) => {
   const newDomain = { ...req.body };
   const restDomains = coloursDomains.filter(dict => dict.id !== idNum);
   coloursDomains = [...restDomains, newDomain].sort((a, b) => a.id - b.id);
-  console.log('SAVE DOMAIN:', id, newDomain, coloursDomains);
   res.json({
     success: true
   });

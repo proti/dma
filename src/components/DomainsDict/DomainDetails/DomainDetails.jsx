@@ -11,7 +11,7 @@ import { DOMAIN, RANGE } from '../DomainsColumns';
 import withDetails from '../../../common/components/Dictionary/DictionaryDetails/withDetails';
 import DropDown from '../../../common/components/DropDown/DropDown';
 import { COLOURS_DICT_REDUCER } from '../../ColoursDict/redux/ColoursDictReducer';
-import validate from '../AddNewDomain/Validator';
+import validate from '../Validator';
 import DomainListHeader from '../DomainListHeader/DomainListHeader';
 
 const { number, string, arrayOf, shape, object, func } = PropTypes;
@@ -65,7 +65,7 @@ class DomainDetails extends Component {
       const { domain, range } = item;
       const columns = { [DOMAIN]: domain, [RANGE]: range };
       return (
-        <ListItem key={id} id={id} onRemove={this.onDomainRemoveHandler}>
+        <ListItem key={id} id={id} onRemove={this.onRowRemoveHandler}>
           {Object.keys(columns).map(column => {
             const columnId = `${id}:${column}`;
             const disabled = !editable;

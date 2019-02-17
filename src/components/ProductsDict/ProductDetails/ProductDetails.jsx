@@ -53,7 +53,7 @@ class ProductDetails extends Component {
       const { id, product, colour, price } = item;
       const columns = { [PRODUCT]: product, [COLOUR]: colour, [PRICE]: price };
       return (
-        <ListItem key={id} id={id} onRemove={this.onDictRemoveHandler}>
+        <ListItem key={id} id={id} onRemove={this.onRowRemoveHandler} isEditable={editable}>
           {Object.keys(columns).map(column => {
             const columnId = `${id}:${column}`;
             const disabled = !editable;

@@ -5,9 +5,12 @@ import style from './addNewDomain.scss';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
 import DropDown from '../../../common/components/DropDown/DropDown';
 import LabelButton from '../../../common/components/LabelButton/LabelButton';
-import validate from './Validator';
+import validate from '../Validator';
 import { COLOURS_DICT_REDUCER } from '../../ColoursDict/redux/ColoursDictReducer';
-import { addNewDomain, getDomains } from '../redux/DomainActions';
+import { addNewDomain } from '../redux/DomainActions';
+import DomainListHeader from '../DomainListHeader/DomainListHeader';
+import List from '../../../common/components/List/List';
+import ListItem from '../../../common/components/List/ListItem/ListItem';
 
 const { arrayOf, shape, number, string, func } = PropTypes;
 const DOMAIN = 'domain';
@@ -19,13 +22,11 @@ class AddNewDomain extends Component {
 
   static propTypes = {
     colours: arrayOf(shape({ id: number, value: string })),
-    addNewDomain: func.isRequired,
-    getDomains: func
+    addNewDomain: func.isRequired
   };
 
   static defaultProps = {
-    colours: null,
-    getDomains: () => {}
+    colours: null
   };
 
   componentDidMount() {
@@ -80,14 +81,15 @@ class AddNewDomain extends Component {
     this.updateRows([...rowsLeft, newRow]);
   };
 
-  onSubmitHandler = async () => {
+  onSubmitHandler = () => {
     const { domainName, rows } = this.state;
-    const { addNewDomain, getDomains } = this.props;
-
+    const { addNewDomain } = this.props;
+    if (!domainName) {
+      this.setState({ errors: { name: 'Name cannot be empty' } });
+      return;
+    }
     const dataToSave = { name: domainName, items: rows };
-
-    await addNewDomain(dataToSave);
-    getDomains();
+    addNewDomain(dataToSave);
   };
 
   renderInputs = () => {
@@ -99,48 +101,39 @@ class AddNewDomain extends Component {
       const domainId = `${DOMAIN}:${id}`;
       const rangeId = `${RANGE}:${id}`;
       return (
-        <tr key={id}>
-          <td>
+        <ListItem key={id} id={id} onRemove={this.onRowRemoveHandler}>
+          <div>
             <DropDown id={domainId} onChange={this.onColourValueChangeHandler} items={colours} />
-            <div>{errors.domain && errors.domain[id]}</div>
-          </td>
-          <td>
+            <div className={style.error}>{errors.domain && errors.domain[id]}</div>
+          </div>
+          <div>
             <DropDown id={rangeId} onChange={this.onColourValueChangeHandler} items={colours} />
-            <div>{errors.range && errors.range[id]}</div>
-          </td>
-          <td>
-            <LabelButton id={id} onClick={this.onRowRemoveHandler}>
-              Remove row
-            </LabelButton>
-          </td>
-        </tr>
+            <div className={style.error}>{errors.range && errors.range[id]}</div>
+          </div>
+        </ListItem>
       );
     });
   };
 
   render() {
+    const { errors } = this.state;
     return (
-      <div className={style.addNewDict}>
+      <div className={style.addNewDomain}>
         <form noValidate>
-          <fieldset>
-            <div>
-              <span>Domain name:</span>
+          <fieldset className={style.name}>
+            Domain name:
+            <span>
               <EditableItem id="domainName" onChange={this.onNameChange} />
-            </div>
+            </span>
+            <div className={style.error}>{errors.name}</div>
           </fieldset>
           <fieldset>
-            <table>
-              <thead>
-                <tr>
-                  <th>Domain</th>
-                  <th>Range</th>
-                </tr>
-              </thead>
-              <tbody>{this.renderInputs()}</tbody>
-            </table>
+            <List label={<DomainListHeader />}>{this.renderInputs()}</List>
           </fieldset>
-          <LabelButton onClick={this.onAddRowClickHandler}>Add row</LabelButton>
-          <LabelButton onClick={this.onSubmitHandler}>Save changes</LabelButton>
+          <footer className={style.footer}>
+            <LabelButton onClick={this.onAddRowClickHandler}>Add row</LabelButton>
+            <LabelButton onClick={this.onSubmitHandler}>Save changes</LabelButton>
+          </footer>
         </form>
       </div>
     );
@@ -151,8 +144,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addNewDomain: data => dispatch(addNewDomain(data)),
-  getDomains: () => dispatch(getDomains())
+  addNewDomain: data => dispatch(addNewDomain(data))
 });
 
 export default connect(

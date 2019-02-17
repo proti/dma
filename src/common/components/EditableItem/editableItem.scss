@@ -1,5 +1,10 @@
+@import '../../../scss/palette';
+
 .editable-item-input {
   &:disabled {
     user-select: none;
+    background: none;
+    border: none;
+    color: $BLACK;
   }
 }

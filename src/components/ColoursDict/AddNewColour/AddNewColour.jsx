@@ -24,7 +24,7 @@ class AddNewColour extends Component {
 
   onSubmitHandler = async () => {
     const { collourName } = this.state;
-    const { data, addColour, getColours, history } = this.props;
+    const { data, addColour, getColours } = this.props;
 
     await getColours();
     const id = Math.max(...data.map(colour => colour.id)) + 1;
@@ -32,9 +32,12 @@ class AddNewColour extends Component {
     if (findDuplicates) {
       this.setState({ error: 'Colour name already exists' });
     } else {
+      if (!collourName) {
+        this.setState({ error: 'Colour name cannot be empty' });
+        return;
+      }
       const dataToSave = { id, name: collourName };
-      await addColour(dataToSave);
-      getColours();
+      addColour(dataToSave);
       this.setState({ collourName: '', error: null });
     }
   };
@@ -42,20 +45,16 @@ class AddNewColour extends Component {
   render() {
     const { error, collourName } = this.state;
     return (
-      <div className={style.addNewProduct}>
+      <div className={style.addNewColour}>
         <form noValidate>
-          <fieldset>
-            <div>
-              <span>Colour name:</span>
-              <EditableItem
-                id="colourName"
-                defaultValue={collourName}
-                onChange={this.onNameChange}
-              />
-              <div>{error}</div>
-            </div>
+          <fieldset className={style.name}>
+            Colour name:
+            <EditableItem id="colourName" defaultValue={collourName} onChange={this.onNameChange} />
+            <div className={style.error}>{error}</div>
           </fieldset>
-          <LabelButton onClick={this.onSubmitHandler}>Save changes</LabelButton>
+          <footer className={style.footer}>
+            <LabelButton onClick={this.onSubmitHandler}>Save changes</LabelButton>
+          </footer>
         </form>
       </div>
     );

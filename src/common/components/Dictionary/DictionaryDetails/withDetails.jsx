@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LabelButton from '../../LabelButton/LabelButton';
 import EditableItem from '../../EditableItem/EditableItem';
+import style from './withDetails.scss';
 
 const withDetails = WrappedComponent => {
   const { arrayOf, shape, number, string, object } = PropTypes;
@@ -54,6 +55,12 @@ const withDetails = WrappedComponent => {
       return +id;
     }
 
+    onRowRemoveHandler = rowId => {
+      const { items } = this.state;
+      const rowsLeft = items.filter(row => row.id !== rowId);
+      this.update(rowsLeft);
+    };
+
     onEditHandler = () => {
       this.setState(prevState => ({ editable: !prevState.editable }));
     };
@@ -68,6 +75,7 @@ const withDetails = WrappedComponent => {
           defaultValue={label}
           disabled={!editable}
           onChange={this.onLabelChangeHandler}
+          newStyle={style.labelInput}
         />
       );
     };
@@ -80,15 +88,21 @@ const withDetails = WrappedComponent => {
       }
       if (!items || !items.length) return 'Fetchind data...';
       return (
-        <div>
-          <div>
+        <div className={style.withDetails}>
+          <header className={style.header}>
             <LabelButton onClick={this.onEditHandler}>Edit</LabelButton>
-          </div>
-          <div>{this.renderLabel()}</div>
-          <div>{super.render()}</div>
-          <div>
-            {editable && <LabelButton onClick={this.onSaveHandler}>Save changes</LabelButton>}
-          </div>
+          </header>
+          <main>
+            <div className={style.labelContainer}>
+              Name:<span className={style.label}>{this.renderLabel()}</span>
+            </div>
+            <div>{super.render()}</div>
+          </main>
+          {editable && (
+            <footer className={style.footer}>
+              <LabelButton onClick={this.onSaveHandler}>Save changes</LabelButton>
+            </footer>
+          )}
         </div>
       );
     }

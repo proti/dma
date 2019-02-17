@@ -1,0 +1,5 @@
+@import '../../../scss/add_new';
+
+.add-new-colour {
+  @include add-new();
+}

@@ -1,0 +1,19 @@
+@import '../../../scss/palette';
+
+.label-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  border-radius: 2px;
+  max-height: 20px;
+
+  &:hover {
+    background-color: $LIGHT_GRAY;
+  }
+
+  &:disabled {
+    background-color: $NICKEL;
+    cursor: default;
+  }
+}

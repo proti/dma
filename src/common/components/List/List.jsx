@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from '../../../scss/_list.scss';
+import style from './list.scss';
 
 const List = ({ label, children }) => {
   return (
-    <div className={style.list}>
-      <div>{label}</div>
-      <ul>{children}</ul>
+    <div className={style.listContainer}>
+      <div className={style.label}>{label}</div>
+      <ul className={style.list}>{children}</ul>
     </div>
   );
 };

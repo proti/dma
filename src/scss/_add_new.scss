@@ -1,0 +1,41 @@
+@import '../../../scss/palette';
+@import '../../../scss/palette';
+
+@mixin add-new {
+  border: 1px solid;
+
+  & .error {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: $RED;
+  }
+
+  & fieldset {
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
+  & .name {
+    font-size: 1rem;
+    padding: 20px;
+    font-weight: 600;
+
+    & span {
+      margin-left: 10px;
+    }
+  }
+
+  & .footer {
+    background-color: $BLACK;
+    padding: 10px;
+
+    & button {
+      margin-right: 10px;
+
+      & :last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

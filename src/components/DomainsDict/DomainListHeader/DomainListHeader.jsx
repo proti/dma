@@ -4,9 +4,9 @@ import { DOMAIN, RANGE } from '../DomainsColumns';
 
 const DomainListHeader = () => {
   return (
-    <div className={style.listHeader}>
-      <span>{DOMAIN}</span>
-      <span>{RANGE}</span>
+    <div className={style.domainListHeader}>
+      <div>{DOMAIN}</div>
+      <div>{RANGE}</div>
     </div>
   );
 };

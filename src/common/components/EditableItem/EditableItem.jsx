@@ -11,13 +11,15 @@ class EditableItem extends Component {
     id: string.isRequired,
     onChange: func,
     disabled: bool,
-    defaultValue: string
+    defaultValue: string,
+    newStyle: string
   };
 
   static defaultProps = {
     onChange: () => {},
     disabled: false,
-    defaultValue: ''
+    defaultValue: '',
+    newStyle: null
   };
 
   onChangeHandler = event => {
@@ -30,7 +32,8 @@ class EditableItem extends Component {
 
   render() {
     const { value } = this.state;
-    const { id, defaultValue, disabled } = this.props;
+    const { id, defaultValue, disabled, newStyle } = this.props;
+    const className = newStyle ? `${style.editableItemInput} ${newStyle}` : style.editableItemInput;
     return (
       <input
         id={id}
@@ -38,7 +41,7 @@ class EditableItem extends Component {
         onChange={this.onChangeHandler}
         value={defaultValue || value}
         disabled={disabled}
-        className={style.editableItemInput}
+        className={className}
       />
     );
   }

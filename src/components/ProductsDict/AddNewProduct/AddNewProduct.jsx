@@ -11,27 +11,28 @@ import List from '../../../common/components/List/List';
 import ProductListHeader from '../ProductListHeader/ProductListHeader';
 import { HOME } from '../../../common/Routes';
 
+const initiatlState = { dictName: null, inputsId: ['0'], items: [], errors: {} };
 const { func, shape } = PropTypes;
 class AddNewProduct extends Component {
-  state = { dictName: null, inputsId: ['0'], items: [] };
+  state = initiatlState;
 
   static propTypes = {
-    addNewDict: func.isRequired,
-    history: shape({})
+    addNewDict: func.isRequired
   };
 
-  static defaultProps = {
-    history: {}
-  };
+  static defaultProps = {};
 
   onNameChange = vo => this.setState({ dictName: vo.value });
-  onSubmitHandler = async () => {
+  onSubmitHandler = () => {
     const { dictName, items } = this.state;
-    const { addNewDict, history } = this.props;
-
+    const { addNewDict } = this.props;
+    if (!dictName) {
+      this.setState({ errors: { name: 'Name cannot be empty' } });
+      return;
+    }
     const dataToSave = { name: dictName, items };
-    await addNewDict(dataToSave);
-    history.push(HOME);
+    addNewDict(dataToSave);
+    this.setState(initiatlState);
   };
 
   onAddRowClickHandler = () => {
@@ -81,20 +82,25 @@ class AddNewProduct extends Component {
   };
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div className={style.addNewProduct}>
         <form noValidate>
-          <fieldset>
-            <div>
-              <span>Dictonary name:</span>
+          <fieldset className={style.name}>
+            Dictonary name:
+            <span>
               <EditableItem id="dictName" onChange={this.onNameChange} />
-            </div>
+            </span>
+            <div className={style.error}>{errors.name}</div>
           </fieldset>
           <fieldset>
             <List label={<ProductListHeader />}>{this.renderInputs()}</List>
           </fieldset>
-          <LabelButton onClick={this.onAddRowClickHandler}>Add row</LabelButton>
-          <LabelButton onClick={this.onSubmitHandler}>Save changes</LabelButton>
+          <footer className={style.footer}>
+            <LabelButton onClick={this.onAddRowClickHandler}>Add row</LabelButton>
+            <LabelButton onClick={this.onSubmitHandler}>Save changes</LabelButton>
+          </footer>
         </form>
       </div>
     );

@@ -9,6 +9,7 @@ import coloursDomainReducer, {
 } from '../components/DomainsDict/redux/DomainReducer';
 import DictMiddleware from '../components/ProductsDict/redux/DictMiddleware';
 import DomainMiddleware from '../components/DomainsDict/redux/DomainMiddleware';
+import ColorsMiddleware from '../components/ColoursDict/redux/ColoursMiddleware';
 
 const store = createStore(
   combineReducers({
@@ -16,7 +17,7 @@ const store = createStore(
     [COLOURS_DICT_REDUCER]: coloursDictReducer,
     [DOMAIN_REDUCER]: coloursDomainReducer
   }),
-  compose(applyMiddleware(thunk, DictMiddleware, DomainMiddleware))
+  compose(applyMiddleware(thunk, DictMiddleware, DomainMiddleware, ColorsMiddleware))
 );
 
 export default store;
