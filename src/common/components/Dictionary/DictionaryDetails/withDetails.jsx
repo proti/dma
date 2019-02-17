@@ -87,10 +87,11 @@ const withDetails = WrappedComponent => {
         return error.message;
       }
       if (!items || !items.length) return 'Fetchind data...';
+      const editLabel = editable ? 'Cancel' : 'Edit';
       return (
         <div className={style.withDetails}>
           <header className={style.header}>
-            <LabelButton onClick={this.onEditHandler}>Edit</LabelButton>
+            <LabelButton onClick={this.onEditHandler}>{editLabel}</LabelButton>
           </header>
           <main>
             <div className={style.labelContainer}>

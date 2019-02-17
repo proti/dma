@@ -10,6 +10,8 @@ import EditableItem from '../../../common/components/EditableItem/EditableItem';
 import { PRODUCT, COLOUR, PRICE } from '../ProductColumns';
 import withDetails from '../../../common/components/Dictionary/DictionaryDetails/withDetails';
 import ProductListHeader from '../ProductListHeader/ProductListHeader';
+import { COLOURS_DICT_REDUCER } from '../../ColoursDict/redux/ColoursDictReducer';
+import DropDown from '../../../common/components/DropDown/DropDown';
 
 const { number, string, arrayOf, shape, object, func } = PropTypes;
 class ProductDetails extends Component {
@@ -49,6 +51,7 @@ class ProductDetails extends Component {
 
   renderItems = () => {
     const { editable, items } = this.state;
+    const { colours } = this.props;
     return items.map(item => {
       const { id, product, colour, price } = item;
       const columns = { [PRODUCT]: product, [COLOUR]: colour, [PRICE]: price };
@@ -58,6 +61,16 @@ class ProductDetails extends Component {
             const columnId = `${id}:${column}`;
             const disabled = !editable;
             const defaultValue = disabled ? columns[column] : items[id][column];
+            if (column === COLOUR && !disabled) {
+              return (
+                <DropDown
+                  key={columnId}
+                  id={columnId}
+                  onChange={this.onEditableItemChangeHandler}
+                  items={colours}
+                />
+              );
+            }
             return (
               <EditableItem
                 key={columnId}
@@ -78,7 +91,8 @@ class ProductDetails extends Component {
   }
 }
 const mapStateToProps = state => ({
-  data: state[DICT_REDUCER].dictDetails
+  data: state[DICT_REDUCER].dictDetails,
+  colours: state[COLOURS_DICT_REDUCER].data
 });
 
 const mapDispatchToProps = dispatch => ({
