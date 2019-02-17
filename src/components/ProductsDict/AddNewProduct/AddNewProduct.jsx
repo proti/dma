@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './addNewProduct.scss';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
-import { addNewDict } from '../DictActions';
-import fetchDataset from '../../../app/AppActions';
+import { addNewDict, fetchDicts } from '../redux/DictActions';
 import LabelButton from '../../../common/components/LabelButton/LabelButton';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
-import { PRODUCT, COLOUR, PRICE } from '../ColumnName';
+import { PRODUCT, COLOUR, PRICE } from '../ProductColumns';
 import List from '../../../common/components/List/List';
-import ListHeader from './ListHeader/ListHeader';
+import ListHeader from '../ListHeader/ListHeader';
 import { HOME } from '../../../common/Routes';
 
 const { func, shape } = PropTypes;
@@ -104,7 +103,7 @@ class AddNewProduct extends Component {
 }
 const mapDispatchToProps = dispatch => ({
   addNewDict: data => dispatch(addNewDict(data)),
-  refetchDicts: () => dispatch(fetchDataset())
+  refetchDicts: () => dispatch(fetchDicts())
 });
 
 export default connect(

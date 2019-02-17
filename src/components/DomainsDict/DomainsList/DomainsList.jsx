@@ -8,11 +8,8 @@ import { DETAILS_DOMAIN, HOME } from '../../../common/Routes';
 
 import withDictionaryList from '../../../common/components/Dictionary/DictionaryList/DictionaryList';
 
-import { COLOURS_DOMAIN_REDUCER } from '../../ColoursDict/ColoursDomain/redux/ColoursDomainReducer';
-import {
-  getDomains,
-  removeDomain
-} from '../../ColoursDict/ColoursDomain/redux/ColoursDomainActions';
+import { COLOURS_DOMAIN_REDUCER } from '../redux/ColoursDomainReducer';
+import { getDomains, removeDomain } from '../redux/ColoursDomainActions';
 
 const { shape, func } = PropTypes;
 

@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  DICTS_REQUEST_SUCCESS,
+  DICTS_REQUEST_ERROR,
+  DICTS_REQUEST,
   DICT_REMOVE_REQUEST,
   DICT_REMOVE_SUCCESS,
   DICT_REMOVE_ERROR,
@@ -13,8 +16,7 @@ import {
   SAVE_DICT_BY_ID_SUCCESS,
   SAVE_DICT_BY_ID_ERROR
 } from './DictActionType';
-import Action from '../../common/Action';
-import { DICTS_REQUEST_SUCCESS, DICTS_REQUEST_ERROR, DICTS_REQUEST } from '../../app/AppActionType';
+import Action from '../../../common/Action';
 
 const API_GET_DATASET = '/api/dict';
 const API_GET_DICTS = '/api/dicts';

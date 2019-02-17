@@ -7,10 +7,7 @@ import DropDown from '../../../common/components/DropDown/DropDown';
 import LabelButton from '../../../common/components/LabelButton/LabelButton';
 import validate from './Validator';
 import { COLOURS_DICT_REDUCER } from '../../ColoursDict/ColoursDictReducer';
-import {
-  addNewDomain,
-  getDomains
-} from '../../ColoursDict/ColoursDomain/redux/ColoursDomainActions';
+import { addNewDomain, getDomains } from '../redux/ColoursDomainActions';
 
 const { arrayOf, shape, number, string, func } = PropTypes;
 const DOMAIN = 'domain';
@@ -53,6 +50,7 @@ class AddNewDomain extends Component {
     const { colours } = this.props;
     let errors = {};
     if (colours && sortedRows.length > 1) {
+      console.log(sortedRows);
       errors = validate(sortedRows, colours);
     }
     this.setState({ rows: [...sortedRows], errors });

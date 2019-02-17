@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import List from '../../../common/components/List/List';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
-import { COLOURS_DOMAIN_REDUCER } from '../../ColoursDict/ColoursDomain/redux/ColoursDomainReducer';
-import { getDomainById } from '../../ColoursDict/ColoursDomain/redux/ColoursDomainActions';
+import { COLOURS_DOMAIN_REDUCER } from '../redux/ColoursDomainReducer';
+import { getDomainById } from '../redux/ColoursDomainActions';
 import { DOMAIN, RANGE } from '../DomainsColumns';
 import withDetails from '../../../common/components/Dictionary/DictionaryDetails/withDetails';
 import DropDown from '../../../common/components/DropDown/DropDown';
 import { COLOURS_DICT_REDUCER } from '../../ColoursDict/ColoursDictReducer';
 import validate from '../AddNewDomain/Validator';
+import DomainListHeader from '../DomainListHeader/DomainListHeader';
 
 const { number, string, arrayOf, shape, object, func } = PropTypes;
 class DomainDetails extends Component {
@@ -30,44 +31,38 @@ class DomainDetails extends Component {
     const { items, label } = this.state;
     const { colours, data } = this.props;
     const errors = validate(items, colours);
-//console.log(errors,":",items,":",colours)
-    if (Object.keys(errors).length) {
-
-      this.setState({ errors });
-    } else {
-      //this.onEditHandler();
+    if (!Object.keys(errors).length) {
+      console.log('SAVE:', data, items);
+      this.onEditHandler();
+      const dataToSave = { ...data, name: label, items };
+      //await saveDictById(dataToSave);
+      //this.fetchData();
     }
-    //  const dataToSave = { ...data, name: label, items };
-    //  await saveDictById(dataToSave);
-    //  this.fetchData();
+    this.setState({ errors });
   };
 
   onEditableItemChangeHandler = item => {
-    console.log(item)
-    const [rowId, column] = item.id.split('row:');
+    const [rowId, column] = item.id.split(':');
     const { items } = this.state;
     const currentRow = items.find(item => item.id === +rowId);
     const restRow = items.filter(item => item.id !== +rowId);
     const newValue = { ...currentRow, [column]: item.value };
     const newItems = [...restRow, newValue];
-    //this.update(newItems);
+    this.update(newItems);
   };
-
-  onLabelChangeHandler = vo => this.update(null, vo.value);
 
   async fetchData() {
     const { getDomainById } = this.props;
     await getDomainById(this.id);
     const { data } = this.props;
-    const { label } = this.state;
-    this.update(data && data.items, label || data.name);
+    this.update(data && data.items, data.name);
   }
 
   renderItems = () => {
-    const { data, colours } = this.props;
+    const { colours } = this.props;
     const { editable, items, errors } = this.state;
-    return data.items.map((item, index) => {
-      const id = `row${index}`;
+    return items.map((item, index) => {
+      const id = index;
       const { domain, range } = item;
       const columns = { [DOMAIN]: domain, [RANGE]: range };
       return (
@@ -93,7 +88,7 @@ class DomainDetails extends Component {
                   items={colours}
                   selected={defaultValue}
                 />
-                <div>{errors.domain && errors.domain[id]}</div>
+                <div>{errors && errors[column] && errors[column][id]}</div>
               </div>
             );
           })}
@@ -102,22 +97,8 @@ class DomainDetails extends Component {
     });
   };
 
-  renderLabel = () => {
-    const { editable, label } = this.state;
-    return (
-      <EditableItem
-        id="label"
-        defaultValue={label}
-        disabled={!editable}
-        onChange={this.onLabelChangeHandler}
-      />
-    );
-  };
-
   render() {
-    const { data } = this.props;
-    if (!data) return 'Fetchind data...';
-    return <List label={this.renderLabel()}>{this.renderItems()}</List>;
+    return <List label={<DomainListHeader />}>{this.renderItems()}</List>;
   }
 }
 const mapStateToProps = state => ({

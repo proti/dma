@@ -81,15 +81,15 @@ module.exports = {
       items: [
         {
           domain: 'Stonegrey',
-          range: 'a'
+          range: 'Stonegrey'
         },
         {
           domain: 'Midnight Black',
-          range: 'b'
+          range: 'Midnight Black'
         },
         {
           domain: 'Mystic Silver',
-          range: 'c'
+          range: 'Mystic Silver'
         }
       ]
     }

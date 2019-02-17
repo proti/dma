@@ -10,11 +10,15 @@ import {
   ADD_NEW_DICT_SUCCESS,
   SAVE_DICT_BY_ID_REQUEST,
   SAVE_DICT_BY_ID_ERROR,
-  SAVE_DICT_BY_ID_SUCCESS
+  SAVE_DICT_BY_ID_SUCCESS,
+  DICTS_REQUEST,
+  DICTS_REQUEST_ERROR,
+  DICTS_REQUEST_SUCCESS
 } from './DictActionType';
 
 const initialState = {
   data: null,
+  dictDetails: null,
   status: null
 };
 
@@ -28,11 +32,13 @@ const dictReducer = (state = initialState, action) => {
   };
 
   switch (action.type) {
+    case DICTS_REQUEST:
     case DICT_REMOVE_REQUEST:
     case GET_DICT_BY_ID_REQUEST:
     case ADD_NEW_DICT_REQUEST:
     case SAVE_DICT_BY_ID_REQUEST:
       return newState;
+    case DICTS_REQUEST_ERROR:
     case DICT_REMOVE_ERROR:
     case GET_DICT_BY_ID_ERROR:
     case ADD_NEW_DICT_ERROR:
@@ -48,10 +54,15 @@ const dictReducer = (state = initialState, action) => {
         ...newState,
         status: action.payload
       };
-    case GET_DICT_BY_ID_SUCCESS:
+    case DICTS_REQUEST_SUCCESS:
       return {
         ...newState,
         data: action.payload
+      };
+    case GET_DICT_BY_ID_SUCCESS:
+      return {
+        ...newState,
+        dictDetails: action.payload
       };
     default:
       return state;

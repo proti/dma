@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Action from '../../../../common/Action';
 import {
   GET_COLOURS_DOMAINS_REQUEST,
   GET_COLOURS_DOMAINS_SUCCESS,
@@ -14,6 +13,7 @@ import {
   REMOVE_COLOURS_DOMAIN_SUCCESS,
   REMOVE_COLOURS_DOMAIN_ERROR
 } from './ColoursDomainActionType';
+import Action from '../../../common/Action';
 
 const API_GET_DOMAINS = '/api/colours/domains';
 const API_DOMAIN = '/api/colours/domain';

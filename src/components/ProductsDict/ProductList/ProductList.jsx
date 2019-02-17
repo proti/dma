@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './productList.scss';
 import List from '../../../common/components/List/List';
-import { fetchDicts, removeDict } from '../DictActions';
+import { fetchDicts, removeDict } from '../redux/DictActions';
 import { DETAILS, HOME } from '../../../common/Routes';
 
 import withDictionaryList from '../../../common/components/Dictionary/DictionaryList/DictionaryList';
-import { APP_REDUCER } from '../../../app/AppReducer';
-import { DICT_REDUCER } from '../DictReducer';
+import { DICT_REDUCER } from '../redux/DictReducer';
 
 const { shape, func } = PropTypes;
 
@@ -44,7 +43,7 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state[APP_REDUCER].data,
+  data: state[DICT_REDUCER].data,
   error: state[DICT_REDUCER].error
 });
 const mapDispatchToProps = dispatch => ({

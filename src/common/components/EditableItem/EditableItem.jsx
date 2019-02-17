@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './editableItem.scss';
-import { PRICE } from '../../../components/ProductsDict/ColumnName';
+import { PRICE } from '../../../components/ProductsDict/ProductColumns';
 
 const { string, func, bool } = PropTypes;
 class EditableItem extends Component {

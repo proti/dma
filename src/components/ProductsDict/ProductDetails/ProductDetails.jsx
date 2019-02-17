@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 //import style from './productDetails.scss';
-import { DICT_REDUCER } from '../DictReducer';
-import { getDictById, saveDictById } from '../DictActions';
+import { DICT_REDUCER } from '../redux/DictReducer';
+import { getDictById, saveDictById } from '../redux/DictActions';
 import List from '../../../common/components/List/List';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
-import { PRODUCT, COLOUR, PRICE } from '../ColumnName';
+import { PRODUCT, COLOUR, PRICE } from '../ProductColumns';
 import withDetails from '../../../common/components/Dictionary/DictionaryDetails/withDetails';
+import ProductListHeader from '../ProductListHeader/ProductListHeader';
 
 const { number, string, arrayOf, shape, object, func } = PropTypes;
 class ProductDetails extends Component {
@@ -40,20 +41,16 @@ class ProductDetails extends Component {
     this.update(newItems);
   };
 
-  onLabelChangeHandler = vo => this.update(null, vo.value);
-
   async fetchData() {
     const { getDictById } = this.props;
     await getDictById(this.id);
     const { data } = this.props;
-    const { label } = this.state;
-    this.update(data && data.items, label || data.name);
+    this.update(data && data.items, data.name);
   }
 
   renderItems = () => {
-    const { data } = this.props;
     const { editable, items } = this.state;
-    return data.items.map(item => {
+    return items.map(item => {
       const { id, product, colour, price } = item;
       const columns = { [PRODUCT]: product, [COLOUR]: colour, [PRICE]: price };
       return (
@@ -77,26 +74,12 @@ class ProductDetails extends Component {
     });
   };
 
-  renderLabel = () => {
-    const { editable, label } = this.state;
-    return (
-      <EditableItem
-        id="label"
-        defaultValue={label}
-        disabled={!editable}
-        onChange={this.onLabelChangeHandler}
-      />
-    );
-  };
-
   render() {
-    const { data } = this.props;
-    if (!data) return 'Fetchind data...';
-    return <List label={this.renderLabel()}>{this.renderItems()}</List>;
+    return <List label={<ProductListHeader />}>{this.renderItems()}</List>;
   }
 }
 const mapStateToProps = state => ({
-  data: state[DICT_REDUCER].data
+  data: state[DICT_REDUCER].dictDetails
 });
 
 const mapDispatchToProps = dispatch => ({

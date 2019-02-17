@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LabelButton from '../../LabelButton/LabelButton';
+import EditableItem from '../../EditableItem/EditableItem';
 
 const withDetails = WrappedComponent => {
   const { arrayOf, shape, number, string, object } = PropTypes;
@@ -40,7 +41,8 @@ const withDetails = WrappedComponent => {
       const { items, label } = this.state;
       const updatedLabel = newLabel || label;
       const sortedItems = newItems ? newItems.sort((a, b) => a.id - b.id) : items;
-      this.setState({ items: sortedItems, label: updatedLabel });
+      const itemsWithIds = sortedItems.map((item, index) => ({ ...item, id: index }));
+      this.setState({ items: itemsWithIds, label: updatedLabel });
     };
 
     get id() {
@@ -56,18 +58,33 @@ const withDetails = WrappedComponent => {
       this.setState(prevState => ({ editable: !prevState.editable }));
     };
 
+    onLabelChangeHandler = vo => this.update(null, vo.value);
+
+    renderLabel = () => {
+      const { editable, label } = this.state;
+      return (
+        <EditableItem
+          id="label"
+          defaultValue={label}
+          disabled={!editable}
+          onChange={this.onLabelChangeHandler}
+        />
+      );
+    };
+
     render() {
       const { items, editable } = this.state;
       const { error } = this.props;
       if (error) {
         return error.message;
       }
-      if (!items) return 'Fetchind data...';
+      if (!items || !items.length) return 'Fetchind data...';
       return (
         <div>
           <div>
             <LabelButton onClick={this.onEditHandler}>Edit</LabelButton>
           </div>
+          <div>{this.renderLabel()}</div>
           <div>{super.render()}</div>
           <div>
             {editable && <LabelButton onClick={this.onSaveHandler}>Save changes</LabelButton>}
