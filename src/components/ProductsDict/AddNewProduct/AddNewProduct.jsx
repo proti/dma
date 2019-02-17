@@ -10,17 +10,20 @@ import { PRODUCT, COLOUR, PRICE } from '../ProductColumns';
 import List from '../../../common/components/List/List';
 import ProductListHeader from '../ProductListHeader/ProductListHeader';
 import { HOME } from '../../../common/Routes';
+import { COLOURS_DICT_REDUCER } from '../../ColoursDict/redux/ColoursDictReducer';
+import DropDown from '../../../common/components/DropDown/DropDown';
 
 const initiatlState = { dictName: null, inputsId: ['0'], items: [], errors: {} };
-const { func, shape } = PropTypes;
+const { func, shape, arrayOf, number, string } = PropTypes;
 class AddNewProduct extends Component {
   state = initiatlState;
 
   static propTypes = {
-    addNewDict: func.isRequired
+    addNewDict: func.isRequired,
+    colours: arrayOf(shape({ id: number, value: string }))
   };
 
-  static defaultProps = {};
+  static defaultProps = { colours: null };
 
   onNameChange = vo => this.setState({ dictName: vo.value });
   onSubmitHandler = () => {
@@ -65,13 +68,24 @@ class AddNewProduct extends Component {
 
   renderInputs = () => {
     const { inputsId } = this.state;
+    const { colours } = this.props;
     return inputsId.map(itemId => {
       const id = +itemId;
       const columns = [PRODUCT, COLOUR, PRICE];
       return (
-        <ListItem key={itemId} id={id} onRemove={this.onRowRemoveHandler}>
+        <ListItem key={itemId} id={id} onRemove={this.onRowRemoveHandler} isEditable>
           {columns.map(item => {
             const colId = `${item}:${id}`;
+            if (item === COLOUR) {
+              return (
+                <DropDown
+                  key={colId}
+                  id={colId}
+                  onChange={this.onEditableItemChangeHandler}
+                  items={colours}
+                />
+              );
+            }
             return (
               <EditableItem key={colId} id={colId} onChange={this.onEditableItemChangeHandler} />
             );
@@ -106,11 +120,14 @@ class AddNewProduct extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  colours: state[COLOURS_DICT_REDUCER].data
+});
 const mapDispatchToProps = dispatch => ({
   addNewDict: data => dispatch(addNewDict(data))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AddNewProduct);

@@ -101,7 +101,7 @@ class AddNewDomain extends Component {
       const domainId = `${DOMAIN}:${id}`;
       const rangeId = `${RANGE}:${id}`;
       return (
-        <ListItem key={id} id={id} onRemove={this.onRowRemoveHandler}>
+        <ListItem key={id} id={id} onRemove={this.onRowRemoveHandler} isEditable>
           <div>
             <DropDown id={domainId} onChange={this.onColourValueChangeHandler} items={colours} />
             <div className={style.error}>{errors.domain && errors.domain[id]}</div>

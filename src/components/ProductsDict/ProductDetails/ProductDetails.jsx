@@ -18,10 +18,12 @@ class ProductDetails extends Component {
   static propTypes = {
     data: shape({ id: number, name: string, items: arrayOf(object) }),
     getDictById: func.isRequired,
-    saveDictById: func.isRequired
+    saveDictById: func.isRequired,
+    colours: arrayOf(shape({ id: number, value: string }))
   };
   static defaultProps = {
-    data: null
+    data: null,
+    colours: null
   };
 
   onSaveHandler = () => {
@@ -68,6 +70,7 @@ class ProductDetails extends Component {
                   id={columnId}
                   onChange={this.onEditableItemChangeHandler}
                   items={colours}
+                  selected={defaultValue}
                 />
               );
             }

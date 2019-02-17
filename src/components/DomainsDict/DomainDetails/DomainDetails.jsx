@@ -65,7 +65,7 @@ class DomainDetails extends Component {
       const { domain, range } = item;
       const columns = { [DOMAIN]: domain, [RANGE]: range };
       return (
-        <ListItem key={id} id={id} onRemove={this.onRowRemoveHandler}>
+        <ListItem key={id} id={id} onRemove={this.onRowRemoveHandler} isEditable={editable}>
           {Object.keys(columns).map(column => {
             const columnId = `${id}:${column}`;
             const disabled = !editable;

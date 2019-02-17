@@ -50,7 +50,13 @@ const withDictionaryList = WrappedComponent => {
       return items.map(item => {
         const { id, name } = item;
         return (
-          <ListItem key={id} id={id} onRemove={this.onItemRemoveHandler} onClick={this.onItemClick}>
+          <ListItem
+            key={id}
+            id={id}
+            onRemove={this.onItemRemoveHandler}
+            onClick={this.onItemClick}
+            isEditable
+          >
             {name}
           </ListItem>
         );

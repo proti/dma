@@ -15,13 +15,12 @@ import {
 } from './DomainActionType';
 import Action from '../../../common/Action';
 
-const API_GET_DOMAINS = '/api/domains';
 const API_DOMAIN = '/api/domain';
 
 const getDomains = () => async dispatch => {
   dispatch(Action(GET_DOMAINS_REQUEST));
   try {
-    const response = await axios.get(`${API_GET_DOMAINS}`);
+    const response = await axios.get(`${API_DOMAIN}/all`);
     return dispatch(Action(GET_DOMAINS_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(GET_DOMAINS_ERROR, error));

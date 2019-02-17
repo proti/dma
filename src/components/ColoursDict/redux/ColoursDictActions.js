@@ -12,13 +12,12 @@ import {
   ADD_COLOUR_ERROR
 } from './ColoursDictActionType';
 
-const API_GET_DATASET = '/api/colours';
-const API_ADD_COLOUR = '/api/colour';
+const API_COLOUR = '/api/colour';
 
 const getColours = () => async dispatch => {
   dispatch(Action(GET_COLOURS_REQUEST));
   try {
-    const response = await axios.get(`${API_GET_DATASET}`);
+    const response = await axios.get(`${API_COLOUR}/all`);
     return dispatch(Action(GET_COLOURS_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(GET_COLOURS_ERROR, error));
@@ -28,7 +27,7 @@ const getColours = () => async dispatch => {
 const saveColours = data => async dispatch => {
   dispatch(Action(SAVE_COLOURS_REQUEST));
   try {
-    const response = await axios.post(`${API_GET_DATASET}`, data);
+    const response = await axios.post(`${API_COLOUR}/all`, data);
     return dispatch(Action(SAVE_COLOURS_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(SAVE_COLOURS_ERROR, error));
@@ -38,7 +37,7 @@ const saveColours = data => async dispatch => {
 const addColour = data => async dispatch => {
   dispatch(Action(ADD_COLOUR_REQUEST));
   try {
-    const response = await axios.post(`${API_ADD_COLOUR}`, data);
+    const response = await axios.post(`${API_COLOUR}`, data);
     return dispatch(Action(ADD_COLOUR_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(ADD_COLOUR_ERROR, error));

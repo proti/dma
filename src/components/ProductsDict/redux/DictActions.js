@@ -18,13 +18,12 @@ import {
 } from './DictActionType';
 import Action from '../../../common/Action';
 
-const API_GET_DATASET = '/api/dict';
-const API_GET_DICTS = '/api/dicts';
+const API_PRODUCT = '/api/product';
 
 const fetchDicts = () => async dispatch => {
   dispatch(Action(DICTS_REQUEST));
   try {
-    const response = await axios.get(`${API_GET_DICTS}`);
+    const response = await axios.get(`${API_PRODUCT}/all`);
     return dispatch(Action(DICTS_REQUEST_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(DICTS_REQUEST_ERROR, error));
@@ -34,7 +33,7 @@ const fetchDicts = () => async dispatch => {
 const removeDict = dictId => async dispatch => {
   dispatch(Action(DICT_REMOVE_REQUEST));
   try {
-    const response = await axios.delete(`${API_GET_DATASET}/${dictId}`);
+    const response = await axios.delete(`${API_PRODUCT}/${dictId}`);
     return dispatch(Action(DICT_REMOVE_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(DICT_REMOVE_ERROR, error));
@@ -44,7 +43,7 @@ const removeDict = dictId => async dispatch => {
 const getDictById = dictId => async dispatch => {
   dispatch(Action(GET_DICT_BY_ID_REQUEST));
   try {
-    const response = await axios.get(`${API_GET_DATASET}/${dictId}`);
+    const response = await axios.get(`${API_PRODUCT}/${dictId}`);
     return dispatch(Action(GET_DICT_BY_ID_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(GET_DICT_BY_ID_ERROR, error));
@@ -54,7 +53,7 @@ const getDictById = dictId => async dispatch => {
 const addNewDict = data => async dispatch => {
   dispatch(Action(ADD_NEW_DICT_REQUEST));
   try {
-    const response = await axios.post(`${API_GET_DATASET}`, data);
+    const response = await axios.post(`${API_PRODUCT}`, data);
     return dispatch(Action(ADD_NEW_DICT_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(ADD_NEW_DICT_ERROR, error));
@@ -64,7 +63,7 @@ const addNewDict = data => async dispatch => {
 const saveDictById = data => async dispatch => {
   dispatch(Action(SAVE_DICT_BY_ID_REQUEST));
   try {
-    const response = await axios.post(`${API_GET_DATASET}/${data.id}`, data);
+    const response = await axios.post(`${API_PRODUCT}/${data.id}`, data);
     return dispatch(Action(SAVE_DICT_BY_ID_SUCCESS, response.data));
   } catch (error) {
     return dispatch(Action(SAVE_DICT_BY_ID_ERROR, error));
