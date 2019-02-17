@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-//import style from './productDetails.scss';
+import style from './domainDetails.scss';
 import List from '../../../common/components/List/List';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
@@ -87,7 +87,7 @@ class DomainDetails extends Component {
                   items={colours}
                   selected={defaultValue}
                 />
-                <div>{errors && errors[column] && errors[column][id]}</div>
+                <div className={style.error}>{errors && errors[column] && errors[column][id]}</div>
               </div>
             );
           })}

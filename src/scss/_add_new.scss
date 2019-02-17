@@ -1,13 +1,12 @@
 @import '../../../scss/palette';
-@import '../../../scss/palette';
+@import './palette';
+@import './error';
 
 @mixin add-new {
   border: 1px solid;
 
   & .error {
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: $RED;
+    @include error();
   }
 
   & fieldset {
