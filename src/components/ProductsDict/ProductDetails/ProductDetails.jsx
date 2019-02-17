@@ -11,6 +11,8 @@ import ProductListHeader from '../ProductListHeader/ProductListHeader';
 import { COLOURS_DICT_REDUCER } from '../../ColoursDict/redux/ColoursDictReducer';
 import DropDown from '../../../common/components/DropDown/DropDown';
 import { PRODUCT_REDUCER } from '../redux/ProductReducer';
+import { DOMAIN_REDUCER } from '../../DomainsDict/redux/DomainReducer';
+import { getDomainById } from '../../DomainsDict/redux/DomainActions';
 
 const { number, string, arrayOf, shape, object, func } = PropTypes;
 class ProductDetails extends Component {
@@ -94,15 +96,18 @@ class ProductDetails extends Component {
 }
 const mapStateToProps = state => ({
   data: state[PRODUCT_REDUCER].dictDetails,
-  colours: state[COLOURS_DICT_REDUCER].data
+  colours: state[COLOURS_DICT_REDUCER].data,
+  domainList: state[DOMAIN_REDUCER].domainList,
+  selctedDomain: state[DOMAIN_REDUCER].data
 });
 
 const mapDispatchToProps = dispatch => ({
   getDictById: dictId => dispatch(getDictById(dictId)),
-  saveDictById: data => dispatch(saveDictById(data))
+  saveDictById: data => dispatch(saveDictById(data)),
+  getDomainById: domainId => dispatch(getDomainById(domainId))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withDetails(ProductDetails));
+)(withDetails(ProductDetails, true));

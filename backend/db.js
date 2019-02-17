@@ -74,24 +74,5 @@ module.exports = {
     }
   ],
   colours: [],
-  coloursDomains: [
-    {
-      id: 0,
-      name: 'test domain colour 0',
-      items: [
-        {
-          domain: 'Stonegrey',
-          range: 'Stonegrey'
-        },
-        {
-          domain: 'Midnight Black',
-          range: 'Midnight Black'
-        },
-        {
-          domain: 'Mystic Silver',
-          range: 'Mystic Silver'
-        }
-      ]
-    }
-  ]
+  coloursDomains: []
 };

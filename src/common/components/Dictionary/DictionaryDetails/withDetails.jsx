@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import LabelButton from '../../LabelButton/LabelButton';
 import EditableItem from '../../EditableItem/EditableItem';
 import style from './withDetails.scss';
+import DropDown from '../../DropDown/DropDown';
 
-const withDetails = WrappedComponent => {
+const withDetails = (WrappedComponent, assignDomain) => {
   const { arrayOf, shape, number, string, object } = PropTypes;
 
   class Details extends WrappedComponent {
@@ -25,7 +26,7 @@ const withDetails = WrappedComponent => {
       return this;
     }
 
-    state = { items: [], label: '', editable: false, errors: [] };
+    state = { items: [], label: '', editable: false, errors: [], domainToAssign: null };
 
     componentDidMount() {
       this.fetchData();
@@ -39,11 +40,20 @@ const withDetails = WrappedComponent => {
     }
 
     update = (newItems, newLabel) => {
-      const { items, label } = this.state;
+      const { items, label, domainToAssign } = this.state;
+      const { domainList } = this.props;
+
       const updatedLabel = newLabel || label;
       const sortedItems = newItems ? newItems.sort((a, b) => a.id - b.id) : items;
       const itemsWithIds = sortedItems.map((item, index) => ({ ...item, id: index }));
-      this.setState({ items: itemsWithIds, label: updatedLabel });
+      const newDomainToAssign =
+        !domainToAssign && assignDomain && domainList.length ? domainList[0].id : domainToAssign;
+
+      this.setState({
+        items: itemsWithIds,
+        label: updatedLabel,
+        domainToAssign: newDomainToAssign
+      });
     };
 
     get id() {
@@ -65,6 +75,25 @@ const withDetails = WrappedComponent => {
       this.setState(prevState => ({ editable: !prevState.editable }));
     };
 
+    onDomainAssignHandler = async () => {
+      const { getDomainById } = this.props;
+      await getDomainById(this.state.domainToAssign);
+      const newItems = this.state.items.map(item => {
+        const found = this.props.selctedDomain.items.find(colour => colour.domain === item.colour);
+        if (found) {
+          return { ...item, colour: found.range };
+        }
+        return item;
+      });
+      this.update(newItems);
+    };
+
+    onDomainChange = item => {
+      const { domainList } = this.props;
+      const domainId = domainList.find(domain => domain.name === item.value).id;
+      this.setState({ domainToAssign: domainId });
+    };
+
     onLabelChangeHandler = vo => this.update(null, vo.value);
 
     renderLabel = () => {
@@ -82,7 +111,7 @@ const withDetails = WrappedComponent => {
 
     render() {
       const { items, editable } = this.state;
-      const { error } = this.props;
+      const { error, domainList } = this.props;
       if (error) {
         return error.message;
       }
@@ -92,6 +121,14 @@ const withDetails = WrappedComponent => {
         <div className={style.withDetails}>
           <header className={style.header}>
             <LabelButton onClick={this.onEditHandler}>{editLabel}</LabelButton>
+            {assignDomain && domainList && (
+              <div className={style.assignDomain}>
+                <DropDown id="domains" onChange={this.onDomainChange} items={domainList} />
+                <LabelButton onClick={this.onDomainAssignHandler} disabled={!editable}>
+                  Assign domain
+                </LabelButton>
+              </div>
+            )}
           </header>
           <main>
             <div className={style.labelContainer}>

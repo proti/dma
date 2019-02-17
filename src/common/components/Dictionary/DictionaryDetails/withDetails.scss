@@ -5,6 +5,14 @@
   & .footer {
     background-color: $BLACK;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    & .assignDomain {
+      & button {
+        margin-left: 10px;
+      }
+    }
   }
 
   & .label-container {
