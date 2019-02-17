@@ -3,18 +3,20 @@ import thunk from 'redux-thunk';
 import dictReducer, { DICT_REDUCER } from '../components/ProductsDict/redux/DictReducer';
 import coloursDictReducer, {
   COLOURS_DICT_REDUCER
-} from '../components/ColoursDict/ColoursDictReducer';
+} from '../components/ColoursDict/redux/ColoursDictReducer';
 import coloursDomainReducer, {
-  COLOURS_DOMAIN_REDUCER
-} from '../components/DomainsDict/redux/ColoursDomainReducer';
+  DOMAIN_REDUCER
+} from '../components/DomainsDict/redux/DomainReducer';
+import DictMiddleware from '../components/ProductsDict/redux/DictMiddleware';
+import DomainMiddleware from '../components/DomainsDict/redux/DomainMiddleware';
 
 const store = createStore(
   combineReducers({
     [DICT_REDUCER]: dictReducer,
     [COLOURS_DICT_REDUCER]: coloursDictReducer,
-    [COLOURS_DOMAIN_REDUCER]: coloursDomainReducer
+    [DOMAIN_REDUCER]: coloursDomainReducer
   }),
-  compose(applyMiddleware(thunk))
+  compose(applyMiddleware(thunk, DictMiddleware, DomainMiddleware))
 );
 
 export default store;

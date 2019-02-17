@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Action from '../../common/Action';
+import Action from '../../../common/Action';
 import {
   GET_COLOURS_REQUEST,
   GET_COLOURS_SUCCESS,

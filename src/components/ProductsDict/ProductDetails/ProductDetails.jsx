@@ -22,13 +22,12 @@ class ProductDetails extends Component {
     data: null
   };
 
-  onSaveHandler = async () => {
+  onSaveHandler = () => {
     const { items, label } = this.state;
     const { saveDictById, data } = this.props;
     this.onEditHandler();
     const dataToSave = { ...data, name: label, items };
-    await saveDictById(dataToSave);
-    this.fetchData();
+    saveDictById(dataToSave);
   };
 
   onEditableItemChangeHandler = item => {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getColours, saveColours } from '../ColoursDictActions';
+import { getColours, saveColours } from '../redux/ColoursDictActions';
 import style from './coloursList.scss';
 import withDictionaryList from '../../../common/components/Dictionary/DictionaryList/DictionaryList';
 import List from '../../../common/components/List/List';
-import { COLOURS_DICT_REDUCER } from '../ColoursDictReducer';
+import { COLOURS_DICT_REDUCER } from '../redux/ColoursDictReducer';
 import { HOME } from '../../../common/Routes';
 
 const { shape, func } = PropTypes;

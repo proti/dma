@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import List from '../../../common/components/List/List';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
-import { COLOURS_DOMAIN_REDUCER } from '../redux/ColoursDomainReducer';
-import { getDomainById } from '../redux/ColoursDomainActions';
+import { DOMAIN_REDUCER } from '../redux/DomainReducer';
+import { getDomainById } from '../redux/DomainActions';
 import { DOMAIN, RANGE } from '../DomainsColumns';
 import withDetails from '../../../common/components/Dictionary/DictionaryDetails/withDetails';
 import DropDown from '../../../common/components/DropDown/DropDown';
-import { COLOURS_DICT_REDUCER } from '../../ColoursDict/ColoursDictReducer';
+import { COLOURS_DICT_REDUCER } from '../../ColoursDict/redux/ColoursDictReducer';
 import validate from '../AddNewDomain/Validator';
 import DomainListHeader from '../DomainListHeader/DomainListHeader';
 
@@ -102,7 +102,7 @@ class DomainDetails extends Component {
   }
 }
 const mapStateToProps = state => ({
-  data: state[COLOURS_DOMAIN_REDUCER].data,
+  data: state[DOMAIN_REDUCER].data,
   colours: state[COLOURS_DICT_REDUCER].data
 });
 

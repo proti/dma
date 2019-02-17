@@ -8,7 +8,7 @@ import LabelButton from '../../../common/components/LabelButton/LabelButton';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import { PRODUCT, COLOUR, PRICE } from '../ProductColumns';
 import List from '../../../common/components/List/List';
-import ListHeader from '../ListHeader/ListHeader';
+import ProductListHeader from '../ProductListHeader/ProductListHeader';
 import { HOME } from '../../../common/Routes';
 
 const { func, shape } = PropTypes;
@@ -32,7 +32,6 @@ class AddNewProduct extends Component {
     const dataToSave = { name: dictName, items };
     await addNewDict(dataToSave);
     history.push(HOME);
-    //refetchDicts(); TODO Add middleware wich reFetch new data
   };
 
   onAddRowClickHandler = () => {
@@ -92,7 +91,7 @@ class AddNewProduct extends Component {
             </div>
           </fieldset>
           <fieldset>
-            <List label={<ListHeader />}>{this.renderInputs()}</List>
+            <List label={<ProductListHeader />}>{this.renderInputs()}</List>
           </fieldset>
           <LabelButton onClick={this.onAddRowClickHandler}>Add row</LabelButton>
           <LabelButton onClick={this.onSubmitHandler}>Save changes</LabelButton>
@@ -102,8 +101,7 @@ class AddNewProduct extends Component {
   }
 }
 const mapDispatchToProps = dispatch => ({
-  addNewDict: data => dispatch(addNewDict(data)),
-  refetchDicts: () => dispatch(fetchDicts())
+  addNewDict: data => dispatch(addNewDict(data))
 });
 
 export default connect(

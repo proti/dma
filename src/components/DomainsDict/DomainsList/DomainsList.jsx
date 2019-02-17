@@ -8,8 +8,8 @@ import { DETAILS_DOMAIN, HOME } from '../../../common/Routes';
 
 import withDictionaryList from '../../../common/components/Dictionary/DictionaryList/DictionaryList';
 
-import { COLOURS_DOMAIN_REDUCER } from '../redux/ColoursDomainReducer';
-import { getDomains, removeDomain } from '../redux/ColoursDomainActions';
+import { DOMAIN_REDUCER } from '../redux/DomainReducer';
+import { getDomains, removeDomain } from '../redux/DomainActions';
 
 const { shape, func } = PropTypes;
 
@@ -45,8 +45,8 @@ class DomainsList extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state[COLOURS_DOMAIN_REDUCER].error,
-  data: state[COLOURS_DOMAIN_REDUCER].domainList
+  error: state[DOMAIN_REDUCER].error,
+  data: state[DOMAIN_REDUCER].domainList
 });
 
 const mapDispatchToProps = dispatch => ({

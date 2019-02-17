@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import style from './addNewColour.scss';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
 import LabelButton from '../../../common/components/LabelButton/LabelButton';
-import { getColours, addColour } from '../ColoursDictActions';
-import { COLOURS_DICT_REDUCER } from '../ColoursDictReducer';
+import { getColours, addColour } from '../redux/ColoursDictActions';
+import { COLOURS_DICT_REDUCER } from '../redux/ColoursDictReducer';
 import { HOME } from '../../../common/Routes';
 
 const { arrayOf, shape, number, string, func } = PropTypes;

@@ -12,11 +12,11 @@ const withDictionaryList = WrappedComponent => {
       'Component'})`;
 
     static propTypes = {
-      // data: arrayOf(shape({ id: number, name: string }))
+      data: arrayOf(shape({ id: number, name: string }))
     };
 
     static defaultProps = {
-      // data: null
+      data: null
     };
 
     constructor(props) {
@@ -33,7 +33,6 @@ const withDictionaryList = WrappedComponent => {
     }
 
     update = (items, eventHandler) => {
-      console.log(items);
       if (items && items.length) {
         const sortedItems = items.sort((a, b) => a.id - b.id);
         this.setState({ items: sortedItems }, eventHandler);
