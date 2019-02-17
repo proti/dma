@@ -6,16 +6,13 @@ import withDictionaryList from '../../../common/components/Dictionary/Dictionary
 import List from '../../../common/components/List/List';
 import { COLOURS_DICT_REDUCER } from '../redux/ColoursDictReducer';
 
-const { shape, func } = PropTypes;
+const { func } = PropTypes;
 class ColoursList extends Component {
   static propTypes = {
-    history: shape({}),
     getColours: func.isRequired,
     saveColours: func.isRequired
   };
-  static defaultProps = {
-    history: {}
-  };
+  static defaultProps = {};
 
   componentDidMount() {
     const { getColours } = this.props;
