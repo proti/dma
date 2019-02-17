@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getColours, saveColours } from '../redux/ColoursDictActions';
-import style from './coloursList.scss';
 import withDictionaryList from '../../../common/components/Dictionary/DictionaryList/DictionaryList';
 import List from '../../../common/components/List/List';
 import { COLOURS_DICT_REDUCER } from '../redux/ColoursDictReducer';
-import { HOME } from '../../../common/Routes';
 
 const { shape, func } = PropTypes;
 class ColoursList extends Component {
@@ -30,10 +28,7 @@ class ColoursList extends Component {
     saveColours(items);
   };
 
-  onItemClick = itemId => {
-    const { history } = this.props;
-    //history.push(DETAILS + '/' + dictId);
-  };
+  // onItemClick = itemId => {};
 
   render() {
     return <List label="Colours:">{this.renderItems()}</List>;

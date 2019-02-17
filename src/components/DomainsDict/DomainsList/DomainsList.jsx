@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import style from './domainsList.scss';
 import List from '../../../common/components/List/List';
 
-import { DETAILS_DOMAIN, HOME } from '../../../common/Routes';
+import { DETAILS_DOMAIN } from '../../../common/Routes';
 
 import withDictionaryList from '../../../common/components/Dictionary/DictionaryList/DictionaryList';
 

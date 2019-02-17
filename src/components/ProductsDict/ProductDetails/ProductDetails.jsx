@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 //import style from './productDetails.scss';
-import { DICT_REDUCER } from '../redux/DictReducer';
-import { getDictById, saveDictById } from '../redux/DictActions';
+import { getDictById, saveDictById } from '../redux/ProductActions';
 import List from '../../../common/components/List/List';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
@@ -12,6 +11,7 @@ import withDetails from '../../../common/components/Dictionary/DictionaryDetails
 import ProductListHeader from '../ProductListHeader/ProductListHeader';
 import { COLOURS_DICT_REDUCER } from '../../ColoursDict/redux/ColoursDictReducer';
 import DropDown from '../../../common/components/DropDown/DropDown';
+import { PRODUCT_REDUCER } from '../redux/ProductReducer';
 
 const { number, string, arrayOf, shape, object, func } = PropTypes;
 class ProductDetails extends Component {
@@ -94,7 +94,7 @@ class ProductDetails extends Component {
   }
 }
 const mapStateToProps = state => ({
-  data: state[DICT_REDUCER].dictDetails,
+  data: state[PRODUCT_REDUCER].dictDetails,
   colours: state[COLOURS_DICT_REDUCER].data
 });
 

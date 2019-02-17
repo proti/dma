@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import style from './productList.scss';
 import List from '../../../common/components/List/List';
-import { fetchDicts, removeDict } from '../redux/DictActions';
-import { DETAILS, HOME } from '../../../common/Routes';
+import { removeDict, fetchProducts } from '../redux/ProductActions';
+import { DETAILS } from '../../../common/Routes';
 
 import withDictionaryList from '../../../common/components/Dictionary/DictionaryList/DictionaryList';
-import { DICT_REDUCER } from '../redux/DictReducer';
+import { PRODUCT_REDUCER } from '../redux/ProductReducer';
 
 const { shape, func } = PropTypes;
 
@@ -43,12 +42,12 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state[DICT_REDUCER].data,
-  error: state[DICT_REDUCER].error
+  data: state[PRODUCT_REDUCER].data,
+  error: state[PRODUCT_REDUCER].error
 });
 const mapDispatchToProps = dispatch => ({
   removeDict: dictId => dispatch(removeDict(dictId)),
-  fetchData: () => dispatch(fetchDicts())
+  fetchData: () => dispatch(fetchProducts())
 });
 
 export default connect(

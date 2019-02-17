@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './addNewProduct.scss';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
-import { addNewDict, fetchDicts } from '../redux/DictActions';
+import { addNewDict } from '../redux/ProductActions';
 import LabelButton from '../../../common/components/LabelButton/LabelButton';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import { PRODUCT, COLOUR, PRICE } from '../ProductColumns';
