@@ -15,8 +15,8 @@ import {
 } from './DomainActionType';
 import Action from '../../../common/Action';
 
-const API_GET_DOMAINS = '/api/colours/domains';
-const API_DOMAIN = '/api/colours/domain';
+const API_GET_DOMAINS = '/api/domains';
+const API_DOMAIN = '/api/domain';
 
 const getDomains = () => async dispatch => {
   dispatch(Action(GET_DOMAINS_REQUEST));
@@ -58,4 +58,13 @@ const addNewDomain = data => async dispatch => {
   }
 };
 
-export { getDomains, removeDomain, getDomainById, addNewDomain };
+const saveDomainById = data => async dispatch => {
+  dispatch(Action(ADD_DOMAIN_REQUEST));
+  try {
+    const response = await axios.post(`${API_DOMAIN}/${data.id}`, data);
+    return dispatch(Action(ADD_DOMAIN_SUCCESS, response.data));
+  } catch (error) {
+    return dispatch(Action(ADD_DOMAIN_ERROR, error));
+  }
+};
+export { getDomains, removeDomain, getDomainById, addNewDomain, saveDomainById };

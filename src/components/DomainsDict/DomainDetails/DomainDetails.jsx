@@ -6,7 +6,7 @@ import List from '../../../common/components/List/List';
 import ListItem from '../../../common/components/List/ListItem/ListItem';
 import EditableItem from '../../../common/components/EditableItem/EditableItem';
 import { DOMAIN_REDUCER } from '../redux/DomainReducer';
-import { getDomainById } from '../redux/DomainActions';
+import { getDomainById, saveDomainById } from '../redux/DomainActions';
 import { DOMAIN, RANGE } from '../DomainsColumns';
 import withDetails from '../../../common/components/Dictionary/DictionaryDetails/withDetails';
 import DropDown from '../../../common/components/DropDown/DropDown';
@@ -19,7 +19,8 @@ class DomainDetails extends Component {
   static propTypes = {
     data: shape({ id: number, name: string, items: arrayOf(object) }),
     colours: arrayOf(shape({ id: number, name: string })),
-    getDomainById: func.isRequired
+    getDomainById: func.isRequired,
+    saveDomainById: func.isRequired
   };
 
   static defaultProps = {
@@ -27,16 +28,14 @@ class DomainDetails extends Component {
     colours: null
   };
 
-  onSaveHandler = async () => {
+  onSaveHandler = () => {
     const { items, label } = this.state;
-    const { colours, data } = this.props;
+    const { colours, data, saveDomainById } = this.props;
     const errors = validate(items, colours);
     if (!Object.keys(errors).length) {
-      console.log('SAVE:', data, items);
       this.onEditHandler();
       const dataToSave = { ...data, name: label, items };
-      //await saveDictById(dataToSave);
-      //this.fetchData();
+      saveDomainById(dataToSave);
     }
     this.setState({ errors });
   };
@@ -107,7 +106,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getDomainById: domainId => dispatch(getDomainById(domainId))
+  getDomainById: domainId => dispatch(getDomainById(domainId)),
+  saveDomainById: data => dispatch(saveDomainById(data))
 });
 
 export default connect(

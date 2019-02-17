@@ -83,7 +83,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getDictById: dictId => dispatch(getDictById(dictId)),
-  saveDictById: dictId => dispatch(saveDictById(dictId))
+  saveDictById: data => dispatch(saveDictById(data))
 });
 
 export default connect(

@@ -10,7 +10,10 @@ import {
   REMOVE_DOMAIN_SUCCESS,
   GET_DOMAIN_BY_ID_REQUEST,
   GET_DOMAIN_BY_ID_SUCCESS,
-  GET_DOMAIN_BY_ID_ERROR
+  GET_DOMAIN_BY_ID_ERROR,
+  SAVE_DOMAIN_BY_ID_REQUEST,
+  SAVE_DOMAIN_BY_ID_ERROR,
+  SAVE_DOMAIN_BY_ID_SUCCESS
 } from './DomainActionType';
 
 const initialState = {
@@ -33,6 +36,7 @@ const domainReducer = (state = initialState, action) => {
     case REMOVE_DOMAIN_REQUEST:
     case GET_DOMAIN_BY_ID_REQUEST:
     case ADD_DOMAIN_REQUEST:
+    case SAVE_DOMAIN_BY_ID_REQUEST:
       return newState;
     case GET_DOMAINS_ERROR:
       return {
@@ -42,12 +46,14 @@ const domainReducer = (state = initialState, action) => {
     case REMOVE_DOMAIN_ERROR:
     case GET_DOMAIN_BY_ID_ERROR:
     case ADD_DOMAIN_ERROR:
+    case SAVE_DOMAIN_BY_ID_ERROR:
       return {
         ...newState,
         error: action.payload.response.data
       };
     case REMOVE_DOMAIN_SUCCESS:
     case ADD_DOMAIN_SUCCESS:
+    case SAVE_DOMAIN_BY_ID_SUCCESS:
       return {
         ...newState,
         status: action.payload

@@ -12,10 +12,12 @@ const EDIT_COLOURS = `${API_PREFIX}/colours`;
 
 const ADD_COLOUR = `${API_PREFIX}/colour`;
 
-const GET_COLOURS_DOMAINS_NAMES = `${API_PREFIX}/colours/domains`;
-const GET_COLOURS_DOMAIN_BY_ID = `${API_PREFIX}/colours/domain/:id`;
-const REMOVE_COLOURS_DOMAIN = `${API_PREFIX}/colours/domain/:id`;
-const SAVE_COLOURS_DOMAIN = `${API_PREFIX}/colours/domain`;
+const GET_DOMAINS_NAMES = `${API_PREFIX}/domains`;
+const GET_DOMAIN_BY_ID = `${API_PREFIX}/domain/:id`;
+const REMOVE_DOMAIN = `${API_PREFIX}/domain/:id`;
+const SAVE_DOMAINS = `${API_PREFIX}/domain`;
+
+const SAVE_DOMAIN = `${API_PREFIX}/domain/:id`;
 
 module.exports = {
   GET_DICTS_NAMES,
@@ -29,8 +31,10 @@ module.exports = {
   EDIT_COLOURS,
   ADD_COLOUR,
 
-  GET_COLOURS_DOMAINS_NAMES,
-  GET_COLOURS_DOMAIN_BY_ID,
-  REMOVE_COLOURS_DOMAIN,
-  SAVE_COLOURS_DOMAIN
+  GET_DOMAINS_NAMES,
+  GET_DOMAIN_BY_ID,
+  REMOVE_DOMAIN,
+  SAVE_DOMAINS,
+
+  SAVE_DOMAIN
 };

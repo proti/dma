@@ -13,10 +13,11 @@ const {
   GET_COLOURS,
   EDIT_COLOURS,
   ADD_COLOUR,
-  GET_COLOURS_DOMAINS_NAMES,
-  GET_COLOURS_DOMAIN_BY_ID,
-  REMOVE_COLOURS_DOMAIN,
-  SAVE_COLOURS_DOMAIN
+  GET_DOMAINS_NAMES,
+  GET_DOMAIN_BY_ID,
+  REMOVE_DOMAIN,
+  SAVE_DOMAINS,
+  SAVE_DOMAIN
 } = require('./routes');
 const {
   NO_DICT_ID_SPECIFIED,
@@ -145,7 +146,7 @@ app.post(ADD_COLOUR, (req, res) => {
 });
 
 //COLOURS DOMAINS
-app.get(GET_COLOURS_DOMAINS_NAMES, (req, res) => {
+app.get(GET_DOMAINS_NAMES, (req, res) => {
   const items = coloursDomains.map(domain => {
     const { id, name } = domain;
     return {
@@ -156,7 +157,7 @@ app.get(GET_COLOURS_DOMAINS_NAMES, (req, res) => {
   res.json(items);
 });
 
-app.get(GET_COLOURS_DOMAIN_BY_ID, (req, res) => {
+app.get(GET_DOMAIN_BY_ID, (req, res) => {
   const id = req.params.id;
   const idNum = +id;
   if (idNum == null) {
@@ -174,7 +175,7 @@ app.get(GET_COLOURS_DOMAIN_BY_ID, (req, res) => {
   }
 });
 
-app.delete(REMOVE_COLOURS_DOMAIN, (req, res) => {
+app.delete(REMOVE_DOMAIN, (req, res) => {
   const id = req.params.id;
   const idNum = +id;
   if (idNum == null) {
@@ -195,7 +196,7 @@ app.delete(REMOVE_COLOURS_DOMAIN, (req, res) => {
   }
 });
 
-app.post(SAVE_COLOURS_DOMAIN, (req, res) => {
+app.post(SAVE_DOMAINS, (req, res) => {
   let newDomain = req.body;
   const newDomainId = coloursDomains.length;
   newDomain = {
@@ -203,6 +204,18 @@ app.post(SAVE_COLOURS_DOMAIN, (req, res) => {
     id: newDomainId
   };
   coloursDomains = [...coloursDomains, newDomain].sort((a, b) => a.id - b.id);
+  res.json({
+    success: true
+  });
+});
+
+app.post(SAVE_DOMAIN, (req, res) => {
+  const id = req.params.id;
+  const idNum = +id;
+  const newDomain = { ...req.body };
+  const restDomains = coloursDomains.filter(dict => dict.id !== idNum);
+  coloursDomains = [...restDomains, newDomain].sort((a, b) => a.id - b.id);
+  console.log('SAVE DOMAIN:', id, newDomain, coloursDomains);
   res.json({
     success: true
   });
